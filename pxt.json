@@ -1,7 +1,7 @@
 {
     "name": "pxt-nexusbit",
     "version": "0.0.0",
-    "description": "",
+    "description": "MakeCode Extension for TCEA Nexus:bit/NexusBot",
     "dependencies": {
         "core": "*",
         "radio": "*",
@@ -10,10 +10,11 @@
     },
     "files": [
         "README.md",
-        "main.ts"
+        "main.ts",
+        "_locales/zh/pxt-nexusbit-strings.json"
     ],
     "testFiles": [
         "test.ts"
     ],
-    "public": false
+    "public": true
 }
