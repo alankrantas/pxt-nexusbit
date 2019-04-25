@@ -114,12 +114,16 @@ enum botAction {
     l_leg_straight,
     //% block="left leg outward"
     l_leg_out,
+    //% block="left leg outward more"
+    l_leg_out_more,
     //% block="left leg inward"
     l_leg_in,
     //% block="right leg straight"
     r_leg_straight,
     //% block="right leg outward"
     r_leg_out,
+    //% block="right leg outward more"
+    r_leg_out_more,
     //% block="right leg inward"
     r_leg_in,
     //% block="left foot flat"
@@ -128,6 +132,8 @@ enum botAction {
     l_foot_down,
     //% block="left foot down more"
     l_foot_down_more,
+    //% block="left foot tiptoe"
+    l_foot_tiptoe,
     //% block="left foot up"
     l_foot_up,
     //% block="right foot flat"
@@ -136,51 +142,53 @@ enum botAction {
     r_foot_down,
     //% block="right foot down more"
     r_foot_down_more,
+    //% block="right foot tiptoe"
+    r_foot_tiptoe,
     //% block="right foot up"
     r_foot_up,
-    //% block="left arm down"
+    //% block="left arm lowest"
     l_arm_down,
     //% block="left arm low"
     l_arm_low,
-    //% block="left arm out"
+    //% block="left arm level"
     l_arm_out,
     //% block="left arm high"
     l_arm_high,
-    //% block="left arm up"
+    //% block="left arm highest"
     l_arm_up,
-    //% block="right arm down"
+    //% block="right arm lowest"
     r_arm_down,
     //% block="right arm low"
     r_arm_low,
-    //% block="right arm out"
+    //% block="right arm level"
     r_arm_out,
     //% block="right arm high"
     r_arm_high,
-    //% block="right arm up"
+    //% block="right arm highest"
     r_arm_up,
-    //% block="left hand down"
-    l_hand_down,
     //% block="left hand inward"
     l_hand_close,
+    //% block="left hand lowest"
+    l_hand_down,
     //% block="left hand low"
     l_hand_low,
     //% block="left hand out"
     l_hand_out,
     //% block="left hand high"
     l_hand_high,
-    //% block="left hand up"
+    //% block="left hand highest"
     l_hand_up,
-    //% block="right hand down"
-    r_hand_down,
-    //% block="right hand inward"
+    //% block="right hand lowest"
     r_hand_close,
     //% block="right hand low"
+    r_hand_down,
+    //% block="right hand inward"
     r_hand_low,
     //% block="right hand out"
     r_hand_out,
     //% block="right hand high"
     r_hand_high,
-    //% block="right hand up"
+    //% block="right hand highest"
     r_hand_up,
 }
 
@@ -201,6 +209,7 @@ enum botWalk {
     shuffle_forward,
     //% block="shuffle backward"
     shuffle_backward,
+    //% block="shuffle dance"
 }
 
 //% weight=200 color=#009fb7 icon="\uf1aa" block="Nexus:bit"
@@ -209,9 +218,9 @@ namespace nexusbit {
     let _boardType: boardType = boardType.nexusbit
     let _joystickSen: number = joystickSen.normal
     let _servoNum: number = 12
-    let _r_led_pin: number = 13
-    let _g_led_pin: number = 14
-    let _b_led_pin: number = 15
+    let _rLedPin: number = 13
+    let _gLedPin: number = 14
+    let _bLedPin: number = 15
     let _initialized: boolean = false
     let _servoDefl: number[] = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90]
     let _servoCurrent: number[] = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90]
@@ -231,14 +240,14 @@ namespace nexusbit {
         _boardType = type
         if (_boardType == boardType.nexusbit) {
             _servoNum = 12
-            _r_led_pin = 13
-            _g_led_pin = 14
-            _b_led_pin = 15
+            _rLedPin = 13
+            _gLedPin = 14
+            _bLedPin = 15
         } else {
             _servoNum = 4
-            _r_led_pin = 9
-            _g_led_pin = 10
-            _b_led_pin = 11
+            _rLedPin = 9
+            _gLedPin = 10
+            _bLedPin = 11
         }
     }
 
@@ -327,46 +336,46 @@ namespace nexusbit {
     }
 
     //% block="PCA9685 RGB LED set to|red = %red|green = %green|blue = %b" red.min=0 red.max=100 red.defl=100 green.min=0 green.max=100 green.defl=100 blue.min=0 blue.max=100 blue.defl=100 group="3. PCA9685 RGB LED" blockExternalInputs=true
-    export function rgb_led(red: number, green: number, blue: number) {
+    export function rgbLed(red: number, green: number, blue: number) {
         _initialize()
-        PCA9685.setLedDutyCycle(_r_led_pin, 100 - Math.constrain(red, 0, 100), 64)
-        PCA9685.setLedDutyCycle(_g_led_pin, 100 - Math.constrain(green, 0, 100), 64)
-        PCA9685.setLedDutyCycle(_b_led_pin, 100 - Math.constrain(blue, 0, 100), 64)
+        PCA9685.setLedDutyCycle(_rLedPin, 100 - Math.constrain(red, 0, 100), 64)
+        PCA9685.setLedDutyCycle(_gLedPin, 100 - Math.constrain(green, 0, 100), 64)
+        PCA9685.setLedDutyCycle(_bLedPin, 100 - Math.constrain(blue, 0, 100), 64)
     }
 
     //% block="PCA9685 RGB LED set to %color brightness level %level" level.min=0 level.max=100 level.defl=100 color.fieldEditor="gridpicker" group="3. PCA9685 RGB LED"
-    export function rgb_led_preset(color: colorType, level: number) {
+    export function rgbLedPreset(color: colorType, level: number) {
         _initialize()
         switch (color) {
             case colorType.white:
-                rgb_led(level, level, level)
+                rgbLed(level, level, level)
                 break
             case colorType.red:
-                rgb_led(level, 0, 0)
+                rgbLed(level, 0, 0)
                 break
             case colorType.green:
-                rgb_led(0, level, 0)
+                rgbLed(0, level, 0)
                 break
             case colorType.blue:
-                rgb_led(0, 0, level)
+                rgbLed(0, 0, level)
                 break
             case colorType.yellow:
-                rgb_led(level, level, 0)
+                rgbLed(level, level, 0)
                 break
             case colorType.cyan:
-                rgb_led(0, level, level)
+                rgbLed(0, level, level)
                 break
             case colorType.purple:
-                rgb_led(level, 0, level)
+                rgbLed(level, 0, level)
                 break
             case colorType.off:
-                rgb_led(0, 0, 0)
+                rgbLed(0, 0, 0)
         }
     }
 
     //% block="PCA9685 RGB LED set to random color" group="3. PCA9685 RGB LED" advanced=true
-    export function rgb_led_random() {
-        rgb_led(Math.randomRange(0, 100), Math.randomRange(0, 100), Math.randomRange(0, 100))
+    export function rgbLedRandom() {
+        rgbLed(Math.randomRange(0, 100), Math.randomRange(0, 100), Math.randomRange(0, 100))
     }
 
     //% block="Configure PCA9685 servo no. %servo|default degree(s) = %deflDegree|min degree(s) = %minDegree|max degree(s) = %maxDegree|gradually turning degree(s) = %delta" servo.min=1 servo.max=12 servo.defl=1 deflDegree.shadow="protractorPicker" deflDegree.defl=90 minDegree.shadow="protractorPicker" minDegree.defl=0 maxDegree.shadow="protractorPicker" maxDegree.defl=180 delta.shadow="protractorPicker" delta.defl=5 group="4. PCA9685 Servos" advanced=true
@@ -541,33 +550,33 @@ namespace nexusbit {
 
     //% block="DC motor %motor speed %speed" speed.shadow="speedPicker" speed.defl=100 group="5. DC/Stepper Motors"
     export function DC(motor: dcMotor, speed: number) {
-        let digitalPin1: DigitalPin = DigitalPin.P0
-        let digitalPin2: DigitalPin = DigitalPin.P0
-        let analogPin1: AnalogPin = AnalogPin.P0
-        let analogPin2: AnalogPin = AnalogPin.P0
-        let notFullSpeed = Math.abs(speed) < 100
+        let dPin1: DigitalPin = DigitalPin.P0
+        let dPin2: DigitalPin = DigitalPin.P0
+        let aPin1: AnalogPin = AnalogPin.P0
+        let aPin2: AnalogPin = AnalogPin.P0
+        let fullSpeed = Math.abs(speed) == 100
         if (motor == dcMotor.P13_14) {
-            digitalPin1 = DigitalPin.P13
-            digitalPin2 = DigitalPin.P14
-            analogPin1 = AnalogPin.P13
-            analogPin2 = AnalogPin.P14
+            dPin1 = DigitalPin.P13
+            dPin2 = DigitalPin.P14
+            aPin1 = AnalogPin.P13
+            aPin2 = AnalogPin.P14
         } else if (motor == dcMotor.P15_16) {
-            digitalPin1 = DigitalPin.P15
-            digitalPin2 = DigitalPin.P16
-            analogPin1 = AnalogPin.P15
-            analogPin2 = AnalogPin.P16
+            dPin1 = DigitalPin.P15
+            dPin2 = DigitalPin.P16
+            aPin1 = AnalogPin.P15
+            aPin2 = AnalogPin.P16
         }
         if (speed > 0) {
-            if (notFullSpeed) pins.analogWritePin(analogPin1, 1023 * speed / 100)
-            else pins.digitalWritePin(digitalPin1, 1)
-            pins.digitalWritePin(digitalPin2, 0)
+            if (fullSpeed) pins.digitalWritePin(dPin1, 1)
+            else pins.analogWritePin(aPin1, 1023 * speed / 100)
+            pins.digitalWritePin(dPin2, 0)
         } else if (speed < 0) {
-            if (notFullSpeed) pins.analogWritePin(analogPin2, 1023 * Math.abs(speed) / 100)
-            else pins.digitalWritePin(digitalPin2, 1)
-            pins.digitalWritePin(digitalPin1, 0)
+            if (fullSpeed) pins.digitalWritePin(dPin2, 1)
+            else pins.analogWritePin(aPin2, 1023 * Math.abs(speed) / 100)
+            pins.digitalWritePin(dPin1, 0)
         } else {
-            pins.digitalWritePin(digitalPin1, 0)
-            pins.digitalWritePin(digitalPin2, 0)
+            pins.digitalWritePin(dPin1, 0)
+            pins.digitalWritePin(dPin2, 0)
         }
     }
 
@@ -657,13 +666,11 @@ namespace nexusbit {
 //% weight=200 color=#e8446d icon="\uf113" block="NexusBot"
 namespace nexusbot {
 
-    let calibrated: boolean = false
     let isInAction: boolean = false
 
-    //% block="Servos calibration|(degree from default:)|Left leg %servo1|Right leg %servo2|Left foot %servo3|Right foot %servo4|Left arm %servo5|Right arm %servo6|Left hand %servo7|Right hand %servo8|then stand still %stand_still" servo1.min=-180 servo1.max=180 servo1.defl=0 servo2.min=-180 servo2.max=180 servo2.defl=0 servo3.min=-180 servo1.max=180 servo3.defl=0 servo4.min=-180 servo1.max=180 servo4.defl=0 servo5.min=-180 servo1.max=180 servo5.defl=0 servo6.min=-180 servo1.max=180 servo6.defl=0 servo7.min=-180 servo1.max=180 servo7.defl=0 servo8.min=-180 servo1.max=180 servo8.defl=0 standstill.defl=true
+    //% block="Servos calibration|(degrees from default:)|Left leg %servo1|Right leg %servo2|Left foot %servo3|Right foot %servo4|Left arm %servo5|Right arm %servo6|Left hand %servo7|Right hand %servo8|then stand still %stand_still" servo1.min=-180 servo1.max=180 servo1.defl=0 servo2.min=-180 servo2.max=180 servo2.defl=0 servo3.min=-180 servo1.max=180 servo3.defl=0 servo4.min=-180 servo1.max=180 servo4.defl=0 servo5.min=-180 servo1.max=180 servo5.defl=0 servo6.min=-180 servo1.max=180 servo6.defl=0 servo7.min=-180 servo1.max=180 servo7.defl=0 servo8.min=-180 servo1.max=180 servo8.defl=0 standstill.defl=true
     export function robotCalibrate(servo1: number, servo2: number, servo3: number, servo4: number, servo5: number, servo6: number, servo7: number, servo8: number, stand_still: boolean) {
         nexusbit.servosDeflAdjust([servo1, servo2, servo3, servo4, servo5 + 90, servo6 - 90, servo7 - 90, servo8 + 90])
-        calibrated = true
         if (stand_still) {
             robotStandstill()
             basic.pause(500)
@@ -675,19 +682,9 @@ namespace nexusbot {
         nexusbit.servoSetDelta([speed, speed, speed, speed, speed, speed, speed, speed])
     }
 
-    //% block="Heard sound ?"
-    export function heardSound(): boolean {
-        return nexusbit.micTriggered() && !isInAction
-    }
-
-    //% block="Detected object ?"
-    export function detectedObj(): boolean {
-        return nexusbit.sonarCheck(compareOpr.smaller, 10)
-    }
-
     //% block="Stand still"
     export function robotStandstill() {
-        if (calibrated) nexusbit.servosToDefl()
+        nexusbit.servosToDefl()
     }
 
     function _servoMove(s: number, d: number) {
@@ -704,6 +701,9 @@ namespace nexusbot {
             case botAction.l_leg_out:
                 _servoMove(1, -20)
                 break
+            case botAction.l_leg_out_more:
+                _servoMove(1, -40)
+                break
             case botAction.l_leg_in:
                 _servoMove(1, 20)
                 break
@@ -712,6 +712,9 @@ namespace nexusbot {
                 break
             case botAction.r_leg_out:
                 _servoMove(2, 20)
+                break
+            case botAction.r_leg_out_more:
+                _servoMove(2, 40)
                 break
             case botAction.r_leg_in:
                 _servoMove(2, -20)
@@ -725,6 +728,9 @@ namespace nexusbot {
             case botAction.l_foot_down_more:
                 _servoMove(3, 40)
                 break
+            case botAction.l_foot_tiptoe:
+                _servoMove(3, 60)
+                break
             case botAction.l_foot_up:
                 _servoMove(3, -15)
                 break
@@ -736,6 +742,9 @@ namespace nexusbot {
                 break
             case botAction.r_foot_down_more:
                 _servoMove(4, -40)
+                break
+            case botAction.r_foot_tiptoe:
+                _servoMove(4, -60)
                 break
             case botAction.r_foot_up:
                 _servoMove(4, 15)
@@ -822,48 +831,40 @@ namespace nexusbot {
             case botWalk.forward:
                 _servosDeltaSeq([
                     [null, null, 40, 15],
-                    [-20, -20, null, null],
-                    [null, null, 0, 0],
+                    [-15, -15, null, null],
                     [null, null, -15, -40],
-                    [20, 20, null, null],
-                    [null, null, 0, 0]
+                    [15, 15, null, null],
                 ])
                 break
             case botWalk.backward:
                 _servosDeltaSeq([
                     [null, null, 40, 15],
-                    [20, 20, null, null],
-                    [null, null, 0, 0],
+                    [15, 15, null, null],
                     [null, null, -15, -40],
-                    [-20, -20, null, null],
-                    [null, null, 0, 0]
+                    [-15, -15, null, null],
                 ])
                 break
             case botWalk.left:
                 _servosDeltaSeq([
                     [null, null, 40, 15],
-                    [-20, 0, null, null],
-                    [null, null, 0, 0],
+                    [-15, 0, null, null],
                     [null, null, -15, -40],
-                    [0, -20, null, null],
-                    [null, null, 0, 0]
+                    [0, -15, null, null],
                 ])
                 break
             case botWalk.right:
                 _servosDeltaSeq([
                     [null, null, -15, -40],
-                    [0, 20, null, null],
-                    [null, null, 0, 0],
+                    [0, 15, null, null],
                     [null, null, 40, 15],
-                    [20, 0, null, null],
-                    [null, null, 0, 0]
+                    [15, 0, null, null],
                 ])
                 break
             case botWalk.shuffle_left:
                 _servosDeltaSeq([
                     [0, 0, -15, -50],
-                    [null, null, 50, null]
                 ])
+                _servoMove(3, 50)
                 basic.pause(300)
                 _servosDeltaSeq([
                     [null, null, null, 15],
@@ -873,8 +874,8 @@ namespace nexusbot {
             case botWalk.shuffle_right:
                 _servosDeltaSeq([
                     [0, 0, 50, 15],
-                    [null, null, null, -50]
                 ])
+                _servoMove(4, -50)
                 basic.pause(300)
                 _servosDeltaSeq([
                     [null, null, -15, null],
@@ -884,7 +885,7 @@ namespace nexusbot {
             case botWalk.shuffle_forward:
                 _servosDeltaSeq([
                     [null, null, 30, -30],
-                    [-30, 30, null, null],
+                    [-20, 20, null, null],
                     [null, null, 0, 0],
                     [0, 0, null, null]
                 ])
@@ -892,12 +893,22 @@ namespace nexusbot {
             case botWalk.shuffle_backward:
                 _servosDeltaSeq([
                     [null, null, 30, -30],
-                    [30, -30, null, null],
+                    [20, -20, null, null],
                     [null, null, 0, 0],
                     [0, 0, null, null]
                 ])
         }
         isInAction = false
+    }
+
+    //% block="Heard sound ?"
+    export function heardSound(): boolean {
+        return nexusbit.micTriggered() && !isInAction
+    }
+
+    //% block="Detected object ?"
+    export function detectedObj(): boolean {
+        return nexusbit.sonarCheck(compareOpr.smaller, 10)
     }
 
 }
