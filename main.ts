@@ -73,15 +73,6 @@ enum servoDir {
     max,
 }
 
-enum dcDir {
-    //% block="forward"
-    forward,
-    //% block="backward"
-    backward,
-    //% block="stop"
-    stop,
-}
-
 enum dcMotor {
     //% block="P13/P14"
     P13_14,
@@ -90,13 +81,13 @@ enum dcMotor {
 }
 
 enum carDir {
-    //% block="go forward"
+    //% block="forward"
     forward,
-    //% block="go backward"
+    //% block="backward"
     backward,
-    //% block="turn left"
+    //% block="left"
     left,
-    //% block="turn right"
+    //% block="right"
     right,
     //% block="stop"
     stop,
@@ -251,6 +242,12 @@ namespace nexusbit {
         }
     }
 
+    //% block="Board information (see serial output)" group="1. Setup" advanced=true
+    export function info() {
+        serial.writeLine("BBC micro:bit motor board Nexus:bit by Taiwan Coding Education Association")
+        serial.writeLine("http://www.beyond-coding.org.tw/")
+    }
+
     //% block="Joystick direction %direction ?" group="2. Basic"
     export function joystickToDir(direction: joystickDir): boolean {
         switch (direction) {
@@ -271,12 +268,12 @@ namespace nexusbit {
         }
     }
 
-    //% block="Set joystick sensitivity %sen" sen.defl=joystickSen.normal group="2. Basic" advanced=true
+    //% block="Joystick sensitivity %sen" sen.defl=joystickSen.normal group="2. Basic" advanced=true
     export function setJoystickSen(sen: joystickSen) {
         _joystickSen = sen
     }
 
-    //% block="Joystick axis %axis analog value" group="2. Basic" advanced=true
+    //% block="Joystick axis %axis analog reading" group="2. Basic" advanced=true
     export function joystickReading(axis: joystickAxis): number {
         if (axis == joystickAxis.x) return pins.analogReadPin(AnalogPin.P1)
         else return pins.analogReadPin(AnalogPin.P2)
@@ -299,7 +296,7 @@ namespace nexusbit {
         }
     }
 
-    //% block="Buzzer play (Hz) %freq duration %duration" freq.shadow="device_note" group="2. Basic"
+    //% block="Buzzer play (Hz) %freq duration (ms) %duration" duration.shadow="timePicker" duration.defl=0 freq.shadow="device_note" group="2. Basic"
     export function buzzer(freq: number, duration: number) {
         pins.analogPitch(freq, duration)
     }
@@ -309,35 +306,35 @@ namespace nexusbit {
         return pins.digitalReadPin(DigitalPin.P12) == 1 && _boardType == boardType.nexusbit
     }
 
-    //% block="Vibrator motor level %level duration %duration (ms)" level.shadow="speedPicker" duration.min=0 duration.defl=0 group="2. Basic"
+    //% block="Vibrator motor level %level duration (ms) %duration" level.min=0 level.max=1023 level.defl=512 duration.min=0 duration.defl=0 group="2. Basic"
     export function vibrator(level: number, duration: number) {
-        if (level == 100) pins.digitalWritePin(DigitalPin.P8, 1)
-        else pins.analogWritePin(AnalogPin.P8, Math.constrain(level, 0, 100) * 1023 / 100)
+        if (level == 1023) pins.digitalWritePin(DigitalPin.P8, 1)
+        else pins.analogWritePin(AnalogPin.P8, Math.constrain(level, 0, 1023))
         if (duration > 0) {
             basic.pause(duration)
             pins.digitalWritePin(DigitalPin.P8, 0)
         }
     }
 
-    //% block="P12 servo turn to %degree degree(s)" degree.shadow="protractorPicker" group="2. Basic"
+    //% block="P12 servo turn to %degree degree(s)" degree.shadow="protractorPicker" degree.defl=180 group="2. Basic"
     export function P12_servo(degree: number) {
         pins.servoWritePin(AnalogPin.P12, Math.constrain(degree, 0, 180))
     }
 
-    //% block="P12 LED brightness level %level" level.shadow="speedPicker" level.defl=100 group="2. Basic" advanced=true
+    //% block="P12 LED brightness level %level" level.min=0 level.max=1023 level.defl=1023 group="2. Basic" advanced=true
     export function P12_led(level: number) {
-        pins.analogWritePin(AnalogPin.P12, Math.constrain(level, 0, 100) * 1023 / 100)
+        pins.analogWritePin(AnalogPin.P12, Math.constrain(level, 0, 1023))
     }
 
-    //% block="PCA9685 RGB LED set to|red = %r|green = %g|blue = %b" r.shadow="speedPicker" r.defl=100 g.shadow="speedPicker" g.defl=100 b.shadow="speedPicker" b.defl=100 group="3. PCA9685 RGB LED" blockExternalInputs=true
-    export function rgb_led(r: number, g: number, b: number) {
+    //% block="PCA9685 RGB LED set to|red = %red|green = %green|blue = %b" red.min=0 red.max=100 red.defl=100 green.min=0 green.max=100 green.defl=100 blue.min=0 blue.max=100 blue.defl=100 group="3. PCA9685 RGB LED" blockExternalInputs=true
+    export function rgb_led(red: number, green: number, blue: number) {
         _initialize()
-        PCA9685.setLedDutyCycle(_r_led_pin, 100 - Math.constrain(r, 0, 100), 64)
-        PCA9685.setLedDutyCycle(_g_led_pin, 100 - Math.constrain(g, 0, 100), 64)
-        PCA9685.setLedDutyCycle(_b_led_pin, 100 - Math.constrain(b, 0, 100), 64)
+        PCA9685.setLedDutyCycle(_r_led_pin, 100 - Math.constrain(red, 0, 100), 64)
+        PCA9685.setLedDutyCycle(_g_led_pin, 100 - Math.constrain(green, 0, 100), 64)
+        PCA9685.setLedDutyCycle(_b_led_pin, 100 - Math.constrain(blue, 0, 100), 64)
     }
 
-    //% block="PCA9685 RGB LED set to %color brightness level %level" level.shadow="speedPicker" level.defl=100 color.fieldEditor="gridpicker" group="3. PCA9685 RGB LED"
+    //% block="PCA9685 RGB LED set to %color brightness level %level" level.min=0 level.max=100 level.defl=100 color.fieldEditor="gridpicker" group="3. PCA9685 RGB LED"
     export function rgb_led_preset(color: colorType, level: number) {
         _initialize()
         switch (color) {
@@ -372,8 +369,8 @@ namespace nexusbit {
         rgb_led(Math.randomRange(0, 100), Math.randomRange(0, 100), Math.randomRange(0, 100))
     }
 
-    //% block="Set PCA9685 servo no. %servo|default position = %deflDegree|min degree(s) = %minDegree|max degree(s) = %maxDegree|movement degree(s) for gradually turning = %delta" servo.min=1 servo.max=12 servo.defl=1 deflDegree.shadow="protractorPicker" deflDegree.defl=90 minDegree.shadow="protractorPicker" minDegree.defl=0 maxDegree.shadow="protractorPicker" maxDegree.defl=180 delta.shadow="protractorPicker" delta.defl=5 group="4. PCA9685 Servos" advanced=true
-    export function servoConfigure(servo: number, deflDegree: number, minDegree: number, maxDegree: number, delta: number) {
+    //% block="Configure PCA9685 servo no. %servo|default degree(s) = %deflDegree|min degree(s) = %minDegree|max degree(s) = %maxDegree|gradually turning degree(s) = %delta" servo.min=1 servo.max=12 servo.defl=1 deflDegree.shadow="protractorPicker" deflDegree.defl=90 minDegree.shadow="protractorPicker" minDegree.defl=0 maxDegree.shadow="protractorPicker" maxDegree.defl=180 delta.shadow="protractorPicker" delta.defl=5 group="4. PCA9685 Servos" advanced=true
+    export function servoConfig(servo: number, deflDegree: number, minDegree: number, maxDegree: number, delta: number) {
         if (servo <= _servoNum) {
             _servoMin[servo - 1] = Math.constrain(minDegree, 0, 180)
             if (Math.constrain(maxDegree, 0, 180) >= minDegree)
@@ -385,45 +382,43 @@ namespace nexusbit {
         }
     }
 
-    //% block="Adjust PCA9685 servos default from array %deflDegrees" group="4. PCA9685 Servos" advanced=true
+    //% block="Adjust PCA9685 servos default position|by array %deflDegrees" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosDeflAdjust(deflDegrees: number[]) {
         if (deflDegrees != null && deflDegrees.length <= _servoNum)
             for (let i = 0; i < deflDegrees.length; i++)
                 _servoDefl[i] = Math.constrain(_servoDefl[i] + deflDegrees[i], _servoMin[i], _servoMax[i])
     }
 
-    //% block="Set PCA9685 servos movement degree(s) from array %deltas" group="4. PCA9685 Servos" advanced=true
+    //% block="Set PCA9685 servos greadually turing degree(s)|by array %deltas" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servoSetDelta(deltas: number[]) {
-        if (deltas != null && deltas.length <= _servoNum)
-            for (let i = 0; i < deltas.length; i++)
+        if (deltas != null)
+            for (let i = 0; i < deltas.length; i++) {
+                if (i == _servoNum) break
                 if (deltas[i] != null && deltas[i] > 0)
                     _servoDelta[i] = Math.constrain(deltas[i], 0, 180)
+            }
     }
 
-    //% block="PCA9685 servo no. %servo turn to %degree degree(s)" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=90 group="4. PCA9685 Servos"
+    //% block="PCA9685 servo no. %servo turn to %degree degree(s)" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=180 group="4. PCA9685 Servos"
     export function servoTo(servo: number, degree: number) {
         _initialize()
-        let newDegrees: number = Math.constrain(degree, _servoMin[servo - 1], _servoMax[servo - 1])
+        degree = Math.constrain(degree, _servoMin[servo - 1], _servoMax[servo - 1])
         if (servo <= _servoNum) {
-            _servoCurrent[servo - 1] = newDegrees
-            PCA9685.setServoPosition(servo, newDegrees, 64)
+            _servoCurrent[servo - 1] = degree
+            PCA9685.setServoPosition(servo, degree, 64)
         }
     }
 
-    //% block="PCA9685 servo no. %servo current degree(s)" servo.min=1 servo.max=12 servo.defl=1 deltaArray.min=0 deltaArray.max=180 deltaArray.defl=5 group="4. PCA9685 Servos" advanced=true
+    //% block="Get PCA9685 servo no. %servo current position" servo.min=1 servo.max=12 servo.defl=1 deltaArray.min=0 deltaArray.max=180 deltaArray.defl=5 group="4. PCA9685 Servos" advanced=true
     export function getServoCurrent(servo: number): number {
-        if (servo <= _servoNum)
-            return _servoCurrent[servo - 1]
-        else
-            return 0
+        if (servo > 0 && servo <= _servoNum) return _servoCurrent[servo - 1]
+        else return 0
     }
 
     //% block="PCA9685 servo no. %servo turn to %direction degree(s)" servo.min=1 servo.max=12 servo.defl=1 group="4. PCA9685 Servos"
     export function servoToMinMax(servo: number, direction: servoDir) {
-        if (direction == servoDir.min)
-            servoTo(servo, _servoMin[servo - 1])
-        else if (direction == servoDir.max)
-            servoTo(servo, _servoMax[servo - 1])
+        if (direction == servoDir.min) servoTo(servo, _servoMin[servo - 1])
+        else servoTo(servo, _servoMax[servo - 1])
     }
 
     //% block="PCA9685 servo no. %servo move %delta degree(s) from default" servo.min=1 servo.max=12 servo.defl=1 delta.min=-180 delta.max=180 delta.defl=0 group="4. PCA9685 Servos"
@@ -433,24 +428,21 @@ namespace nexusbit {
 
     //% block="PCA9685 servo no. %servo gradually turn toward %degree degree(s)" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=90 group="4. PCA9685 Servos" advanced=true
     export function servoSlowTurn(servo: number, degree: number) {
-        let target: number = Math.constrain(degree, _servoMin[servo - 1], _servoMax[servo - 1])
+        degree = Math.constrain(degree, _servoMin[servo - 1], _servoMax[servo - 1])
         let newDegree: number = _servoCurrent[servo - 1]
-        if (Math.abs(target - _servoCurrent[servo - 1]) > 0 &&
-            Math.abs(target - _servoCurrent[servo - 1]) <= _servoDelta[servo - 1]) {
-            servoTo(servo, target)
+        if (Math.abs(degree - _servoCurrent[servo - 1]) > 0 && Math.abs(degree - _servoCurrent[servo - 1]) <= _servoDelta[servo - 1]) {
+            servoTo(servo, degree)
         } else {
-            if (target > _servoCurrent[servo - 1]) newDegree = _servoCurrent[servo - 1] + _servoDelta[servo - 1]
-            else if (target < _servoCurrent[servo - 1]) newDegree = _servoCurrent[servo - 1] - _servoDelta[servo - 1]
+            if (degree > _servoCurrent[servo - 1]) newDegree = _servoCurrent[servo - 1] + _servoDelta[servo - 1]
+            else if (degree < _servoCurrent[servo - 1]) newDegree = _servoCurrent[servo - 1] - _servoDelta[servo - 1]
             servoTo(servo, newDegree)
         }
     }
 
     //% block="PCA9685 servo no. %servo at %degree degree(s) %check ?" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=90 group="4. PCA9685 Servos" advanced=true
     export function ServoIsAtDegree(servo: number, degree: number, check: boolean) {
-        if (check)
-            return getServoCurrent(servo) == degree
-        else
-            return !(getServoCurrent(servo) == degree)
+        if (servo > 0 && servo < _servoNum) return check == true ? getServoCurrent(servo) == degree : !(getServoCurrent(servo) == degree)
+        else return false
     }
 
     //% block="PCA9685 servo no. %servo gradually turn toward %direction degree(s)" servo.min=1 servo.max=12 servo.defl=1 group="4. PCA9685 Servos" advanced=true
@@ -463,10 +455,8 @@ namespace nexusbit {
 
     //% block="PCA9685 servo no. %servo at %direction degree(s) %check ?" servo.min=1 servo.max=12 servo.defl=1 group="4. PCA9685 Servos" advanced=true
     export function ServoIsAtMinMax(servo: number, direction: servoDir, check: boolean) {
-        if (direction == servoDir.min)
-            return ServoIsAtDegree(servo, _servoMin[servo - 1], check)
-        else
-            return ServoIsAtDegree(servo, _servoMax[servo - 1], check)
+        if (direction == servoDir.min) return ServoIsAtDegree(servo, _servoMin[servo - 1], check)
+        else return ServoIsAtDegree(servo, _servoMax[servo - 1], check)
     }
 
     //% block="PCA9685 servo no. %servo gradually move %delta degree(s) from default" servo.min=1 servo.max=12 servo.defl=1 delta.min=-180 delta.max=180 delta.defl=0 group="4. PCA9685 Servos" advanced=true
@@ -484,18 +474,13 @@ namespace nexusbit {
 
     //% block="PCA9685 servo no. %servo at degree(s) %delta from default %check ?" servo.min=1 servo.max=12 servo.defl=1 delta.min=-180 delta.max=180 delta.defl=0 group="4. PCA9685 Servos" advanced=true
     export function servoIsDeltaFromDefl(servo: number, delta: number, check: boolean) {
-        let result: boolean = false
-        let target: number = _servoDefl[servo - 1] + delta
-        if (_servoCurrent[servo - 1] == target) result = true
-        if (!check) result = !result
-        return result
+        return ServoIsAtDegree(servo, _servoDefl[servo - 1] + delta, check)
     }
 
-    //% block="PCA9685 all servos gradually move|from default from array %deltas|turning delay (ms) = %delay|and wait at end (ms) = %delayEnd" delay.min=0 delayEnd.min=0 group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
-    export function servosSlowTurnDeltaFromDefl(deltas: number[], delay: number, delayEnd: number) {
+    //% block="PCA9685 all servos gradually move|from default by array %deltas|turning delay (ms) = %delay" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
+    export function servosSlowTurnDeltaFromDefl(deltas: number[], delay: number) {
         let check: boolean = true
         if (delay < 0) delay = 0
-        if (delayEnd < 0) delayEnd = 0
         if (deltas != null && deltas.length <= _servoNum) {
             while (true) {
                 check = true
@@ -508,9 +493,8 @@ namespace nexusbit {
                     }
                 }
                 if (check) break
-                basic.pause(delay)
+                if (delay > 0) basic.pause(delay)
             }
-            basic.pause(delayEnd)
         }
     }
 
@@ -555,13 +539,13 @@ namespace nexusbit {
         return null
     }
 
-    //% block="DC motor %motor direction %direction speed %speed" speed.shadow="speedPicker" speed.defl=100 group="5. DC/Stepper Motors"
-    export function DC(motor: dcMotor, direction: dcDir, speed: number) {
+    //% block="DC motor %motor speed %speed" speed.shadow="speedPicker" speed.defl=100 group="5. DC/Stepper Motors"
+    export function DC(motor: dcMotor, speed: number) {
         let digitalPin1: DigitalPin = DigitalPin.P0
         let digitalPin2: DigitalPin = DigitalPin.P0
         let analogPin1: AnalogPin = AnalogPin.P0
         let analogPin2: AnalogPin = AnalogPin.P0
-        let notFullSpeed = speed < 100
+        let notFullSpeed = Math.abs(speed) < 100
         if (motor == dcMotor.P13_14) {
             digitalPin1 = DigitalPin.P13
             digitalPin2 = DigitalPin.P14
@@ -573,59 +557,48 @@ namespace nexusbit {
             analogPin1 = AnalogPin.P15
             analogPin2 = AnalogPin.P16
         }
-        switch (direction) {
-            case dcDir.forward:
-                if (notFullSpeed) {
-                    if (speed == 0) pins.digitalWritePin(digitalPin1, 0)
-                    else pins.analogWritePin(analogPin1, 1023 * speed / 100)
-                } else {
-                    pins.digitalWritePin(digitalPin1, 1)
-                }
-                pins.digitalWritePin(digitalPin2, 0)
-                break
-            case dcDir.backward:
-                pins.digitalWritePin(digitalPin1, 0)
-                if (notFullSpeed) {
-                    if (speed == 0) pins.digitalWritePin(digitalPin2, 0)
-                    else pins.analogWritePin(analogPin2, 1023 * speed / 100)
-                } else {
-                    pins.digitalWritePin(digitalPin2, 1)
-                }
-                break
-            case dcDir.stop:
-                pins.digitalWritePin(digitalPin1, 0)
-                pins.digitalWritePin(digitalPin2, 0)
+        if (speed > 0) {
+            if (notFullSpeed) pins.analogWritePin(analogPin1, 1023 * speed / 100)
+            else pins.digitalWritePin(digitalPin1, 1)
+            pins.digitalWritePin(digitalPin2, 0)
+        } else if (speed < 0) {
+            if (notFullSpeed) pins.analogWritePin(analogPin2, 1023 * Math.abs(speed) / 100)
+            else pins.digitalWritePin(digitalPin2, 1)
+            pins.digitalWritePin(digitalPin1, 0)
+        } else {
+            pins.digitalWritePin(digitalPin1, 0)
+            pins.digitalWritePin(digitalPin2, 0)
         }
     }
 
-    //% block="2WD DC motor car|direction %direction|turn mode %mode|right motor speed %r_speed|left motor speed %l_speed" r_speed.shadow="speedPicker" r_speed.defl=100 l_speed.shadow="speedPicker" l_speed.defl=100 group="5. DC/Stepper Motors" blockExternalInputs=true advanced=true
-    export function DC_car(direction: carDir, mode: carTurnMode, r_speed: number, l_speed: number) {
+    //% block="2WD DC motor car|direction %carDir|turn mode %mode|right motor speed %rightSpeed|left motor speed %leftSpeed" rightSpeed.min=0 rightSpeed.max=100 rightSpeed.defl=100 leftSpeed.min=0 leftSpeed.max=100 leftSpeed.defl=100 group="5. DC/Stepper Motors" blockExternalInputs=true advanced=true
+    export function DC_car(direction: carDir, mode: carTurnMode, rightSpeed: number, leftSpeed: number) {
         switch (direction) {
             case carDir.forward:
-                DC(dcMotor.P15_16, dcDir.forward, l_speed)
-                DC(dcMotor.P13_14, dcDir.forward, r_speed)
+                DC(dcMotor.P15_16, leftSpeed)
+                DC(dcMotor.P13_14, rightSpeed)
                 break
             case carDir.backward:
-                DC(dcMotor.P15_16, dcDir.backward, l_speed)
-                DC(dcMotor.P13_14, dcDir.backward, r_speed)
+                DC(dcMotor.P15_16, leftSpeed * -1)
+                DC(dcMotor.P13_14, rightSpeed * -1)
                 break
             case carDir.left:
+                DC(dcMotor.P13_14, rightSpeed)
                 if (mode == carTurnMode.normal)
-                    DC(dcMotor.P15_16, dcDir.stop, l_speed)
+                    DC(dcMotor.P15_16, 0)
                 else if (mode == carTurnMode.rotate)
-                    DC(dcMotor.P15_16, dcDir.backward, l_speed)
-                DC(dcMotor.P13_14, dcDir.forward, r_speed)
+                    DC(dcMotor.P15_16, leftSpeed * -1)
                 break
             case carDir.right:
-                DC(dcMotor.P15_16, dcDir.forward, l_speed)
+                DC(dcMotor.P15_16, leftSpeed)
                 if (mode == carTurnMode.normal)
-                    DC(dcMotor.P13_14, dcDir.stop, r_speed)
+                    DC(dcMotor.P13_14, 0)
                 else if (mode == carTurnMode.rotate)
-                    DC(dcMotor.P13_14, dcDir.backward, r_speed)
+                    DC(dcMotor.P13_14, rightSpeed * -1)
                 break
             case carDir.stop:
-                DC(dcMotor.P15_16, dcDir.stop, l_speed)
-                DC(dcMotor.P13_14, dcDir.stop, r_speed)
+                DC(dcMotor.P15_16, 0)
+                DC(dcMotor.P13_14, 0)
         }
     }
 
@@ -717,16 +690,8 @@ namespace nexusbot {
         if (calibrated) nexusbit.servosToDefl()
     }
 
-    function _servo_move(servo: number, degree: number) {
-        nexusbit.servoDeltaFromDefl(servo, degree)
-    }
-
-    function _servos_delta(array: number[], delay: number, delay_end: number) {
-        nexusbit.servosSlowTurnDeltaFromDefl(array, delay, delay_end)
-    }
-
-    function _servos_delta_seq(array: number[][]) {
-        for (let i = 0; i < array.length; i++) _servos_delta(array[i], 0, 0)
+    function _servoMove(s: number, d: number) {
+        nexusbit.servoDeltaFromDefl(s, d)
     }
 
     //% block="Action: %action" action.fieldEditor="gridpicker"
@@ -734,112 +699,203 @@ namespace nexusbot {
         isInAction = true
         switch (action) {
             case botAction.l_leg_straight:
-                _servo_move(1, 0)
+                _servoMove(1, 0)
                 break
             case botAction.l_leg_out:
-                _servo_move(1, -20)
+                _servoMove(1, -20)
                 break
             case botAction.l_leg_in:
-                _servo_move(1, 20)
+                _servoMove(1, 20)
                 break
             case botAction.r_leg_straight:
-                _servo_move(2, 0)
+                _servoMove(2, 0)
                 break
             case botAction.r_leg_out:
-                _servo_move(2, 20)
+                _servoMove(2, 20)
                 break
             case botAction.r_leg_in:
-                _servo_move(2, -20)
+                _servoMove(2, -20)
                 break
             case botAction.l_foot_flat:
-                _servo_move(3, 0)
+                _servoMove(3, 0)
                 break
             case botAction.l_foot_down:
-                _servo_move(3, 15)
+                _servoMove(3, 15)
                 break
             case botAction.l_foot_down_more:
-                _servo_move(3, 40)
+                _servoMove(3, 40)
                 break
             case botAction.l_foot_up:
-                _servo_move(3, -15)
+                _servoMove(3, -15)
                 break
             case botAction.r_foot_flat:
-                _servo_move(4, 0)
+                _servoMove(4, 0)
                 break
             case botAction.r_foot_down:
-                _servo_move(4, -15)
+                _servoMove(4, -15)
                 break
             case botAction.r_foot_down_more:
-                _servo_move(4, -40)
+                _servoMove(4, -40)
                 break
             case botAction.r_foot_up:
-                _servo_move(4, 15)
+                _servoMove(4, 15)
                 break
             case botAction.l_arm_down:
-                _servo_move(5, 0)
+                _servoMove(5, 0)
                 break
             case botAction.l_arm_low:
-                _servo_move(5, -45)
+                _servoMove(5, -45)
                 break
             case botAction.l_arm_out:
-                _servo_move(5, -90)
+                _servoMove(5, -90)
                 break
             case botAction.l_arm_high:
-                _servo_move(5, -135)
+                _servoMove(5, -135)
                 break
             case botAction.l_arm_up:
-                _servo_move(5, -180)
+                _servoMove(5, -180)
                 break
             case botAction.r_arm_down:
-                _servo_move(6, 0)
+                _servoMove(6, 0)
                 break
             case botAction.r_arm_low:
-                _servo_move(6, 45)
+                _servoMove(6, 45)
                 break
             case botAction.r_arm_out:
-                _servo_move(6, 90)
+                _servoMove(6, 90)
                 break
             case botAction.r_arm_high:
-                _servo_move(6, 135)
+                _servoMove(6, 135)
                 break
             case botAction.r_arm_up:
-                _servo_move(6, 180)
+                _servoMove(6, 180)
                 break
             case botAction.l_hand_down:
-                _servo_move(7, 0)
+                _servoMove(7, 0)
                 break
             case botAction.l_hand_close:
-                _servo_move(7, -15)
+                _servoMove(7, -15)
                 break
             case botAction.l_hand_low:
-                _servo_move(7, 45)
+                _servoMove(7, 45)
                 break
             case botAction.l_hand_out:
-                _servo_move(7, 90)
+                _servoMove(7, 90)
                 break
             case botAction.l_hand_high:
-                _servo_move(7, 135)
+                _servoMove(7, 135)
                 break
             case botAction.l_hand_up:
-                _servo_move(7, 180)
+                _servoMove(7, 180)
                 break
             case botAction.r_hand_down:
-                _servo_move(8, 0)
+                _servoMove(8, 0)
                 break
             case botAction.r_hand_close:
-                _servo_move(8, 15)
+                _servoMove(8, 15)
                 break
             case botAction.r_hand_low:
-                _servo_move(8, -45)
+                _servoMove(8, -45)
                 break
             case botAction.r_hand_out:
-                _servo_move(8, -90)
+                _servoMove(8, -90)
                 break
             case botAction.r_hand_high:
-                _servo_move(8, -135)
+                _servoMove(8, -135)
                 break
             case botAction.r_hand_up:
-                _servo_move(8, -180)
+                _servoMove(8, -180)
+        }
+        isInAction = false
+    }
+
+    function _servosDeltaSeq(seq: number[][]) {
+        for (let i = 0; i < seq.length; i++) {
+            nexusbit.servosSlowTurnDeltaFromDefl(seq[i], 0)
+        }
+    }
+
+    //% block="Movement: %action" action.fieldEditor="gridpicker"
+    export function robot_walk(action: botWalk) {
+        isInAction = true
+        switch (action) {
+            case botWalk.forward:
+                _servosDeltaSeq([
+                    [null, null, 40, 15],
+                    [-20, -20, null, null],
+                    [null, null, 0, 0],
+                    [null, null, -15, -40],
+                    [20, 20, null, null],
+                    [null, null, 0, 0]
+                ])
+                break
+            case botWalk.backward:
+                _servosDeltaSeq([
+                    [null, null, 40, 15],
+                    [20, 20, null, null],
+                    [null, null, 0, 0],
+                    [null, null, -15, -40],
+                    [-20, -20, null, null],
+                    [null, null, 0, 0]
+                ])
+                break
+            case botWalk.left:
+                _servosDeltaSeq([
+                    [null, null, 40, 15],
+                    [-20, 0, null, null],
+                    [null, null, 0, 0],
+                    [null, null, -15, -40],
+                    [0, -20, null, null],
+                    [null, null, 0, 0]
+                ])
+                break
+            case botWalk.right:
+                _servosDeltaSeq([
+                    [null, null, -15, -40],
+                    [0, 20, null, null],
+                    [null, null, 0, 0],
+                    [null, null, 40, 15],
+                    [20, 0, null, null],
+                    [null, null, 0, 0]
+                ])
+                break
+            case botWalk.shuffle_left:
+                _servosDeltaSeq([
+                    [0, 0, -15, -50],
+                    [null, null, 50, null]
+                ])
+                basic.pause(300)
+                _servosDeltaSeq([
+                    [null, null, null, 15],
+                    [null, null, 0, 0]
+                ])
+                break
+            case botWalk.shuffle_right:
+                _servosDeltaSeq([
+                    [0, 0, 50, 15],
+                    [null, null, null, -50]
+                ])
+                basic.pause(300)
+                _servosDeltaSeq([
+                    [null, null, -15, null],
+                    [null, null, 0, 0]
+                ])
+                break
+            case botWalk.shuffle_forward:
+                _servosDeltaSeq([
+                    [null, null, 30, -30],
+                    [-30, 30, null, null],
+                    [null, null, 0, 0],
+                    [0, 0, null, null]
+                ])
+                break
+            case botWalk.shuffle_backward:
+                _servosDeltaSeq([
+                    [null, null, 30, -30],
+                    [30, -30, null, null],
+                    [null, null, 0, 0],
+                    [0, 0, null, null]
+                ])
         }
         isInAction = false
     }
