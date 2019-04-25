@@ -48,7 +48,7 @@ enum compareOpr {
 }
 
 enum colorType {
-    //% block="white"
+    //% block="white (full)"
     white,
     //% block="red"
     red,
@@ -62,7 +62,7 @@ enum colorType {
     cyan,
     //% block="purple"
     purple,
-    //% block="off"
+    //% block="black (off)"
     off,
 }
 
@@ -335,7 +335,7 @@ namespace nexusbit {
         pins.analogWritePin(AnalogPin.P12, Math.constrain(level, 0, 1023))
     }
 
-    //% block="PCA9685 RGB LED set to|red = %red|green = %green|blue = %b" red.min=0 red.max=100 red.defl=100 green.min=0 green.max=100 green.defl=100 blue.min=0 blue.max=100 blue.defl=100 group="3. PCA9685 RGB LED" blockExternalInputs=true
+    //% block="PCA9685 RGB LED set to|red = %red|green = %green|blue = %blue" red.min=0 red.max=100 red.defl=100 green.min=0 green.max=100 green.defl=100 blue.min=0 blue.max=100 blue.defl=100 group="3. PCA9685 RGB LED" blockExternalInputs=true
     export function rgbLed(red: number, green: number, blue: number) {
         _initialize()
         PCA9685.setLedDutyCycle(_rLedPin, 100 - Math.constrain(red, 0, 100), 64)
@@ -611,7 +611,7 @@ namespace nexusbit {
         }
     }
 
-    //% block="Stepper motor 1 step|IN1 = %pin1 IN2 = %pin2 IN3 = %pin3 IN4 = %pin4|direction %direction|cycle delay (us) = %delay" pin1.defl=DigitalPin.P13 pin2.defl=DigitalPin.P14 pin3.defl=DigitalPin.P15 pin4.defl=DigitalPin.P16 delay.min=2300 delay.defl=2300 group="5. DC/Stepper Motors"
+    //% block="Stepper motor 1 step|(with ULN2003 driver board)|IN1 = %pin1 IN2 = %pin2 IN3 = %pin3 IN4 = %pin4|direction %direction|cycle delay (us) = %delay" pin1.defl=DigitalPin.P13 pin2.defl=DigitalPin.P14 pin3.defl=DigitalPin.P15 pin4.defl=DigitalPin.P16 delay.min=2300 delay.defl=2300 group="5. DC/Stepper Motors"
     export function stepMotor(pin1: DigitalPin, pin2: DigitalPin, pin3: DigitalPin, pin4: DigitalPin, direction: steMotorDir, delay: number) {
         let pins_array: DigitalPin[] = [pin1, pin2, pin3, pin4]
         if (delay < 2300) delay = 2300
@@ -631,7 +631,7 @@ namespace nexusbit {
         }
     }
 
-    //% block="2WD stepper motor car 1 step|motor A IN1 = %pin1a|motor A IN2 = %pin2a|motor A IN3 = %pin3a|motor A IN4 = %pin4a|motor B IN1 = %pin1b|motor B IN2 = %pin2b|motor B IN3 = %pin3b|motor B IN4 = %pin4b|motor A direction %direction_1|motor B direction %direction_2|cycle delay (us) = %delay|disable LEDs %disable_led" pin1a.defl=DigitalPin.P6 pin2a.defl=DigitalPin.P7 pin3a.defl=DigitalPin.P9 pin4a.defl=DigitalPin.P10 pin1b.defl=DigitalPin.P13 pin2b.defl=DigitalPin.P14 pin3b.defl=DigitalPin.P15 pin4b.defl=DigitalPin.P16 delay.min=2300 delay.defl=2300 disable_led.defl=true group="5. DC/Stepper Motors" advanced=true
+    //% block="2WD stepper motor car 1 step|(with ULN2003 driver boards)|motor A IN1 = %pin1a|motor A IN2 = %pin2a|motor A IN3 = %pin3a|motor A IN4 = %pin4a|motor B IN1 = %pin1b|motor B IN2 = %pin2b|motor B IN3 = %pin3b|motor B IN4 = %pin4b|motor A direction %direction_1|motor B direction %direction_2|cycle delay (us) = %delay|disable LEDs %disable_led" pin1a.defl=DigitalPin.P6 pin2a.defl=DigitalPin.P7 pin3a.defl=DigitalPin.P9 pin4a.defl=DigitalPin.P10 pin1b.defl=DigitalPin.P13 pin2b.defl=DigitalPin.P14 pin3b.defl=DigitalPin.P15 pin4b.defl=DigitalPin.P16 delay.min=2300 delay.defl=2300 disable_led.defl=true group="5. DC/Stepper Motors" advanced=true
     export function stepMotorCar(pin1a: DigitalPin, pin2a: DigitalPin, pin3a: DigitalPin, pin4a: DigitalPin, pin1b: DigitalPin, pin2b: DigitalPin, pin3b: DigitalPin, pin4b: DigitalPin, direction_1: steMotorDir, direction_2: steMotorDir, delay: number, disable_led: boolean) {
         let pins_array_1: DigitalPin[] = [pin1a, pin2a, pin3a, pin4a]
         let pins_array_2: DigitalPin[] = [pin1b, pin2b, pin3b, pin4b]
@@ -668,7 +668,7 @@ namespace nexusbot {
 
     let isInAction: boolean = false
 
-    //% block="Servos calibration|(degrees from default:)|Left leg %servo1|Right leg %servo2|Left foot %servo3|Right foot %servo4|Left arm %servo5|Right arm %servo6|Left hand %servo7|Right hand %servo8|then stand still %stand_still" servo1.min=-180 servo1.max=180 servo1.defl=0 servo2.min=-180 servo2.max=180 servo2.defl=0 servo3.min=-180 servo1.max=180 servo3.defl=0 servo4.min=-180 servo1.max=180 servo4.defl=0 servo5.min=-180 servo1.max=180 servo5.defl=0 servo6.min=-180 servo1.max=180 servo6.defl=0 servo7.min=-180 servo1.max=180 servo7.defl=0 servo8.min=-180 servo1.max=180 servo8.defl=0 standstill.defl=true
+    //% block="Servos calibration|(degrees from default:)|Left leg (servo 1) %servo1|Right leg (servo 2) %servo2|Left foot (servo 3) %servo3|Right foot (servo 4) %servo4|Left arm (servo 5) %servo5|Right arm (servo 6) %servo6|Left hand (servo 7) %servo7|Right hand (servo 8) %servo8|then stand still %stand_still" servo1.min=-180 servo1.max=180 servo1.defl=0 servo2.min=-180 servo2.max=180 servo2.defl=0 servo3.min=-180 servo1.max=180 servo3.defl=0 servo4.min=-180 servo1.max=180 servo4.defl=0 servo5.min=-180 servo1.max=180 servo5.defl=0 servo6.min=-180 servo1.max=180 servo6.defl=0 servo7.min=-180 servo1.max=180 servo7.defl=0 servo8.min=-180 servo1.max=180 servo8.defl=0 standstill.defl=true
     export function robotCalibrate(servo1: number, servo2: number, servo3: number, servo4: number, servo5: number, servo6: number, servo7: number, servo8: number, stand_still: boolean) {
         nexusbit.servosDeflAdjust([servo1, servo2, servo3, servo4, servo5 + 90, servo6 - 90, servo7 - 90, servo8 + 90])
         if (stand_still) {
