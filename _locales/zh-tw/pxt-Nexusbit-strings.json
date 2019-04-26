@@ -100,7 +100,7 @@
   "nexusbit.servoIsDeltaFromDefl|block": "PCA9685 伺服馬達編號 %servo 已自預設位置轉動 %delta 度 %check ?",
   "nexusbit.servoSetDelta|block": "設定 PCA9685 伺服馬達的逐次轉動度數|依據陣列 %deltas",
   "nexusbit.servoSlowTurnDeltaFromDeflAndCheck|block": "PCA9685 所有伺服馬達自預設位置轉動 %delta 度直到完成",
-  "nexusbit.servoSlowTurnDeltaFromDefl|block": "PCA9685 伺服馬達編號 %servo 自預設位置逐次轉動 %delta 度",
+  "nexusbit.servoSlowTurnDeltaFromDefl|block": "PCA9685 伺服馬達編號 %servo 自預設位置逐次轉至 %delta 度",
   "nexusbit.servoSlowTurnMinMax|block": "PCA9685 伺服馬達編號 %servo 逐次轉至 %direction 角度",
   "nexusbit.servoSlowTurn|block": "PCA9685 伺服馬達編號 %servo 逐次轉至 %degree 度",
   "nexusbit.servoToMinMax|block": "PCA9685 伺服馬達編號 %servo 轉至 %direction 角度",
