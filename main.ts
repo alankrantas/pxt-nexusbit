@@ -486,7 +486,7 @@ namespace nexusbit {
         return ServoIsAtDegree(servo, _servoDefl[servo - 1] + delta, check)
     }
 
-    //% block="PCA9685 all servos gradually move|from default by array %deltas|turning delay (ms) = %delay" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
+    //% block="PCA9685 all servos gradually move from default|by array %deltas|turning delay (ms) = %delay" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosSlowTurnDeltaFromDefl(deltas: number[], delay: number) {
         let check: boolean = true
         if (delay < 0) delay = 0
@@ -535,7 +535,7 @@ namespace nexusbit {
                     servoTo(i + 1, Math.constrain(degrees[i], 0, 180))
     }
 
-    //% block="All PCA9685 servos move to degrees %deltas from default group="4. PCA9685 Servos" blockExternalInputs=true
+    //% block="All PCA9685 servos move to degrees %deltas from default" group="4. PCA9685 Servos" blockExternalInputs=true
     export function servosToDeltaFromDefl(deltas: number[]) {
         if (deltas != null && deltas.length <= _servoNum)
             for (let i = 0; i < deltas.length; i++)
