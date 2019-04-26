@@ -450,7 +450,7 @@ namespace nexusbit {
 
     //% block="PCA9685 servo no. %servo at %degree degree(s) %check ?" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=90 group="4. PCA9685 Servos" advanced=true
     export function ServoIsAtDegree(servo: number, degree: number, check: boolean) {
-        if (servo > 0 && servo < _servoNum) return check == true ? getServoCurrent(servo) == degree : !(getServoCurrent(servo) == degree)
+        if (servo > 0 && servo <= _servoNum) return check == true ? getServoCurrent(servo) == degree : !(getServoCurrent(servo) == degree)
         else return false
     }
 
