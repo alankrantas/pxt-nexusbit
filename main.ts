@@ -535,7 +535,7 @@ namespace nexusbit {
                     servoTo(i + 1, Math.constrain(degrees[i], 0, 180))
     }
 
-    //% block="All PCA9685 servos move to degrees %deltas|from default and wait at end (ms) %delayEnd" group="4. PCA9685 Servos" blockExternalInputs=true
+    //% block="All PCA9685 servos move to degrees %deltas from default group="4. PCA9685 Servos" blockExternalInputs=true
     export function servosToDeltaFromDefl(deltas: number[]) {
         if (deltas != null && deltas.length <= _servoNum)
             for (let i = 0; i < deltas.length; i++)
