@@ -109,7 +109,7 @@
   "nexusbit.servosSlowTurnDeltaFromDefl|block": "PCA9685 所有伺服馬達自預設位置逐次轉動|依據陣列 %deltas|轉動延遲 (毫秒) = %delay",
   "nexusbit.servosToDefl|block": "PCA9685 所有伺服馬達轉至預設位置",
   "nexusbit.servosToDegree|block": "PCA9685 所有伺服馬達轉至 %degree 度",
-  "nexusbit.servosToDeltaFromDefl|block": "PCA9685 所有伺服馬達自預設位置逐次轉動, 依據陣列 %deltas|完成後等待 (毫秒) %delayEnd",
+  "nexusbit.servosToDeltaFromDefl|block": "PCA9685 所有伺服馬達自預設位置逐次轉動, 依據陣列 %deltas %delayEnd",
   "nexusbit.setJoystickSen|block": "搖桿靈敏度 %sen",
   "nexusbit.sonarCheck|block": "超音波模組偵測距離 %compare %distance (公分) ?",
   "nexusbit.sonarDistance|block": "超音波模組偵測距離 (公分)",
