@@ -1,10 +1,10 @@
-# MakeCode Extension for Nexus:bit and NexusBot (BETA)
+# MakeCode Extension for Nexus:bit expansion board and NexusBot Biped Robot (BETA)
 
 ![logo-3](https://user-images.githubusercontent.com/44191076/56939149-3e0f2a80-6b39-11e9-96d0-225bd1d3b2b7.jpg)
 
 ![IMG_8292](https://user-images.githubusercontent.com/44191076/56938796-cdffa500-6b36-11e9-9379-e86c138079bb.JPG)
 
-Nexus:bit is a powerful BBC [micro:bit](https://microbit.org/) multiple-purpose extension board made by [Taiwan Coding Education Association](http://www.beyond-coding.org.tw/):
+Nexus:bit is a powerful [BBC micro:bit](https://microbit.org/) multiple-purpose extension board made by [Taiwan Coding Education Association](http://www.beyond-coding.org.tw/). Its features include:
 
 * an onboard rechargable 18650 lithium battery (included; 2600 mAh) with reverse current/over charging protection
 * miniature joystick/botton board (the connection slots can also be used to install a HC-SR04/HC-SR04P ultrasonic sensor)
@@ -26,11 +26,15 @@ NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. T
 
 This extension is also appliable to Thunder:bit V1/V2 motor boards (you'll need to select the board type), which is similar to Nexus:bit except microphone and have only 4 PCA9685 servo pins.
 
-## How to Import
+## Import Extension
 
-In the [MakeCode editor](https://makecode.microbit.org/) go to Advanced -> +Extension... and copy/paste the url "https://github.com/alankrantas/pxt-Nexusbit" into the serach box. Press enter and you'll be able to import the extension.
+In the [MakeCode editor](https://makecode.microbit.org/) go to Advanced -> +Extension... and copy/paste the url https://github.com/alankrantas/pxt-Nexusbit into the serach box. Press enter and you'll be able to import the extension.
 
-## Nexus:bit and NexutBot Online Manual
+## Nexus:bit/NexutBot Online Manual
+
+(working in progress)
+
+## Where to Buy Nexus:bit/NexutBot
 
 (working in progress)
 
