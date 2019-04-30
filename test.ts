@@ -1,48 +1,84 @@
-// this test code requires the joystick board
 let index = 0
 input.onButtonPressed(Button.A, function () {
-    music.beginMelody(music.builtInMelody(Melodies.Entertainer), MelodyOptions.Once)
-    nexusbit.vibrator(256, 2000)
+    music.beginMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
 })
 input.onButtonPressed(Button.B, function () {
-    music.beginMelody(music.builtInMelody(Melodies.Ringtone), MelodyOptions.Once)
-    nexusbit.vibrator(1023, 2000)
+    nexusbit.vibrator(1023, 1000)
+    nexusbit.vibrator(512, 1000)
+    nexusbit.vibrator(0, 0)
 })
+index = 0
 nexusbit.selectBoard(boardType.nexusbit)
+nexusbit.rgbLedPreset(colorType.red, 100)
 nexusbit.P12_servo(90)
-nexusbit.rgbLedPreset(colorType.off, 100)
 nexusbit.servosToDefl()
-basic.forever(function () {
-    if (nexusbit.joystickToDir(joystickDir.forward)) {
-        nexusbit.DC(dcMotor.P13_14, 100)
-        nexusbit.DC(dcMotor.P15_16, 100)
-        nexusbit.rgbLedPreset(colorType.white, 100)
-    } else if (nexusbit.joystickToDir(joystickDir.backward)) {
-        nexusbit.DC(dcMotor.P13_14, -100)
-        nexusbit.DC(dcMotor.P15_16, -100)
-        nexusbit.rgbLedPreset(colorType.red, 100)
-    } else if (nexusbit.joystickToDir(joystickDir.left)) {
-        nexusbit.P12_servo(0)
-        for (let index = 0; index <= 11; index++) {
-            nexusbit.servoToMinMax(index + 1, servoDir.min)
-        }
-        nexusbit.rgbLedPreset(colorType.green, 100)
-    } else if (nexusbit.joystickToDir(joystickDir.right)) {
-        nexusbit.P12_servo(180)
-        for (let index = 0; index <= 11; index++) {
-            nexusbit.servoToMinMax(index + 1, servoDir.max)
-        }
-        nexusbit.rgbLedPreset(colorType.blue, 100)
-    } else {
-        nexusbit.DC(dcMotor.P13_14, 0)
-        nexusbit.DC(dcMotor.P15_16, 0)
-        nexusbit.rgbLedPreset(colorType.off, 100)
-    }
-})
+basic.pause(1000)
+nexusbit.rgbLedPreset(colorType.green, 100)
+nexusbit.P12_servo(0)
+nexusbit.servosToDegree([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+nexusbit.DC_car(
+carDir.forward,
+carTurnMode.normal,
+100,
+100
+)
+basic.pause(1000)
+nexusbit.rgbLedPreset(colorType.blue, 100)
+nexusbit.P12_servo(180)
+nexusbit.servosToDegree([180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180])
+nexusbit.DC_car(
+carDir.backward,
+carTurnMode.normal,
+100,
+100
+)
+basic.pause(1000)
+nexusbit.rgbLedPreset(colorType.white, 100)
 basic.forever(function () {
     if (nexusbit.micTriggered()) {
         basic.showIcon(IconNames.Happy)
     } else {
         basic.clearScreen()
+    }
+    if (nexusbit.joystickToDir(joystickDir.forward)) {
+        basic.showLeds(`
+            . . # . .
+            . . . . .
+            . . . . .
+            . . . . .
+            . . . . .
+            `)
+    } else if (nexusbit.joystickToDir(joystickDir.backward)) {
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . . . . .
+            . . . . .
+            . . # . .
+            `)
+    } else if (nexusbit.joystickToDir(joystickDir.left)) {
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            # . . . .
+            . . . . .
+            . . . . .
+            `)
+    } else if (nexusbit.joystickToDir(joystickDir.right)) {
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . . . . #
+            . . . . .
+            . . . . .
+            `)
+    } else {
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . . # . .
+            . . . . .
+            . . . . .
+            `)
     }
 })
