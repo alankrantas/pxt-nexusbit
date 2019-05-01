@@ -833,33 +833,33 @@ namespace nexusbot {
             case botWalk.forward:
                 _servosDeltaSeq([
                     [null, null, 40, 15],
-                    [-15, -15, null, null],
+                    [-20, -20, null, null],
                     [null, null, -15, -40],
-                    [15, 15, null, null],
+                    [20, 20, null, null],
                 ])
                 break
             case botWalk.backward:
                 _servosDeltaSeq([
                     [null, null, 40, 15],
-                    [15, 15, null, null],
+                    [20, 20, null, null],
                     [null, null, -15, -40],
-                    [-15, -15, null, null],
+                    [-20, -20, null, null],
                 ])
                 break
             case botWalk.left:
                 _servosDeltaSeq([
                     [null, null, 40, 15],
-                    [-15, 0, null, null],
+                    [-20, 0, null, null],
                     [null, null, -15, -40],
-                    [0, -15, null, null],
+                    [0, -20, null, null],
                 ])
                 break
             case botWalk.right:
                 _servosDeltaSeq([
                     [null, null, -15, -40],
-                    [0, 15, null, null],
+                    [0, 20, null, null],
                     [null, null, 40, 15],
-                    [15, 0, null, null],
+                    [20, 0, null, null],
                 ])
                 break
             case botWalk.shuffle_left:
