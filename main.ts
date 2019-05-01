@@ -1,7 +1,6 @@
 /**
-* MakeCode editor extension For BBC micro:bit motor board "Nexus:bit" and Robot "NexusBot"
-* from Taiwan Coding Education Association (https://www.beyond-coding.org.tw/)
-* By Alan Wang, April 2019
+* MakeCode editor extension For BBC micro:bit expansion board "Nexus:bit" and Robot "NexusBot" from Taiwan Coding Education Association (TCEA)
+* By Alan Wang, May 2019
 */
 
 enum boardType {
@@ -253,8 +252,11 @@ namespace nexusbit {
 
     //% block="Board information (see serial output)" group="1. Setup" advanced=true
     export function info() {
-        serial.writeLine("BBC micro:bit motor board Nexus:bit by Taiwan Coding Education Association")
-        serial.writeLine("http://www.beyond-coding.org.tw/")
+        serial.writeLine("Nexus:bit and NexusBot are products made by Taiwan Coding Education Association (TCEA)")
+        serial.writeLine("https://www.beyond-coding.org.tw/")
+        serial.writeLine("Extension written by Alan Wang, May 2019. Check out detailed documents here:")
+        serial.writeLine("https://github.com/alankrantas/pxt-Nexusbit")
+        basic.showString("Taiwan Coding Education Association")
     }
 
     //% block="Joystick direction %direction ?" group="2. Basic"
