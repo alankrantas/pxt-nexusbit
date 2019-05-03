@@ -239,14 +239,14 @@ namespace nexusbit {
         _boardType = type
         if (_boardType == boardType.nexusbit) {
             _servoNum = 12
-            _rLedPin = 13
+            _rLedPin = 15
             _gLedPin = 14
-            _bLedPin = 15
+            _bLedPin = 13
         } else {
             _servoNum = 4
-            _rLedPin = 9
+            _rLedPin = 11
             _gLedPin = 10
-            _bLedPin = 11
+            _bLedPin = 9
         }
     }
 
