@@ -6,8 +6,10 @@
 enum boardType {
     //% block="Nexus:bit"
     nexusbit,
-    //% block="Thunder:bit"
-    thunderbit,
+    //% block="Thunder:bit V2"
+    thunderbit_v2,
+    //% block="Thunder:bit V1"
+    thunderbit_v1,
 }
 
 enum joystickDir {
@@ -215,17 +217,17 @@ enum botWalk {
 namespace nexusbit {
 
     let _boardType: boardType = boardType.nexusbit
-    let _joystickSen: number = joystickSen.normal
-    let _servoNum: number = 12
-    let _rLedPin: number = 13
-    let _gLedPin: number = 14
-    let _bLedPin: number = 15
-    let _initialized: boolean = false
-    let _servoDefl: number[] = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90]
-    let _servoCurrent: number[] = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90]
-    let _servoMin: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    let _servoMax: number[] = [180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180]
-    let _servoDelta: number[] = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+    let _joystickSen = joystickSen.normal
+    let _servoNum = 12
+    let _rLedPin = 15
+    let _gLedPin = 14
+    let _bLedPin = 13
+    let _initialized = false
+    let _servoDefl = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90]
+    let _servoCurrent = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90]
+    let _servoMin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let _servoMax = [180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180]
+    let _servoDelta = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
 
     function _initialize() {
         if (!_initialized) {
@@ -242,11 +244,16 @@ namespace nexusbit {
             _rLedPin = 15
             _gLedPin = 14
             _bLedPin = 13
-        } else {
+        } else if (_boardType == boardType.thunderbit_v2) {
             _servoNum = 4
             _rLedPin = 11
             _gLedPin = 10
             _bLedPin = 9
+        } else {
+            _servoNum = 4
+            _rLedPin = 9
+            _gLedPin = 10
+            _bLedPin = 11
         }
     }
 
@@ -254,9 +261,8 @@ namespace nexusbit {
     export function info() {
         serial.writeLine("Nexus:bit and NexusBot are products made by Taiwan Coding Education Association (TCEA)")
         serial.writeLine("https://www.beyond-coding.org.tw/")
-        serial.writeLine("Extension written by Alan Wang, May 2019. Check out detailed documents here:")
+        serial.writeLine("Extension by Alan Wang, May 2019. Check out instructions in the following link:")
         serial.writeLine("https://github.com/alankrantas/pxt-Nexusbit")
-        basic.showString("Taiwan Coding Education Association")
     }
 
     //% block="Joystick direction %direction ?" group="2. Basic"
@@ -297,9 +303,9 @@ namespace nexusbit {
 
     //% block="Ultrasonic distance %compare %distance (cm) ?" distance.min=1 distance.max=200 distance.defl=15 group="2. Basic" advanced=true
     export function sonarCheck(compare: compareOpr, distance: number): boolean {
-        let d: number = sonarDistance()
-        if (d != 0) {
-            d = Math.constrain(d, 2, 200)
+        let d = sonarDistance()
+        if (d > 0) {
+            d = Math.constrain(d, 1, 200)
             if (compare == compareOpr.smaller) return d < distance
             else return d > distance
         } else {
@@ -384,10 +390,8 @@ namespace nexusbit {
     export function servoConfig(servo: number, deflDegree: number, minDegree: number, maxDegree: number, delta: number) {
         if (servo <= _servoNum) {
             _servoMin[servo - 1] = Math.constrain(minDegree, 0, 180)
-            if (Math.constrain(maxDegree, 0, 180) >= minDegree)
-                _servoMax[servo - 1] = Math.constrain(maxDegree, 0, 180)
-            else
-                _servoMax[servo - 1] = _servoMin[servo - 1]
+            if (Math.constrain(maxDegree, 0, 180) >= minDegree) _servoMax[servo - 1] = Math.constrain(maxDegree, 0, 180)
+            else _servoMax[servo - 1] = _servoMin[servo - 1]
             _servoDefl[servo - 1] = Math.constrain(deflDegree, _servoMin[servo - 1], _servoMax[servo - 1])
             _servoDelta[servo - 1] = Math.constrain(delta, 0, 180)
         }
@@ -396,8 +400,7 @@ namespace nexusbit {
     //% block="Adjust PCA9685 servos default position|by array %deflDegrees" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosDeflAdjust(deflDegrees: number[]) {
         if (deflDegrees != null && deflDegrees.length <= _servoNum)
-            for (let i = 0; i < deflDegrees.length; i++)
-                _servoDefl[i] = Math.constrain(_servoDefl[i] + deflDegrees[i], _servoMin[i], _servoMax[i])
+            for (let i = 0; i < deflDegrees.length; i++) _servoDefl[i] = Math.constrain(_servoDefl[i] + deflDegrees[i], _servoMin[i], _servoMax[i])
     }
 
     //% block="Set PCA9685 servos greadually turing degree(s)|by array %deltas" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
@@ -405,8 +408,7 @@ namespace nexusbit {
         if (deltas != null)
             for (let i = 0; i < deltas.length; i++) {
                 if (i == _servoNum) break
-                if (deltas[i] != null && deltas[i] > 0)
-                    _servoDelta[i] = Math.constrain(deltas[i], 0, 180)
+                if (deltas[i] != null && deltas[i] > 0) _servoDelta[i] = Math.constrain(deltas[i], 0, 180)
             }
     }
 
@@ -440,7 +442,7 @@ namespace nexusbit {
     //% block="PCA9685 servo no. %servo gradually turn toward %degree degree(s)" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=90 group="4. PCA9685 Servos" advanced=true
     export function servoSlowTurn(servo: number, degree: number) {
         degree = Math.constrain(degree, _servoMin[servo - 1], _servoMax[servo - 1])
-        let newDegree: number = _servoCurrent[servo - 1]
+        let newDegree = _servoCurrent[servo - 1]
         if (Math.abs(degree - _servoCurrent[servo - 1]) > 0 && Math.abs(degree - _servoCurrent[servo - 1]) <= _servoDelta[servo - 1]) {
             servoTo(servo, degree)
         } else {
@@ -472,8 +474,8 @@ namespace nexusbit {
 
     //% block="PCA9685 servo no. %servo gradually move %delta degree(s) from default" servo.min=1 servo.max=12 servo.defl=1 delta.min=-180 delta.max=180 delta.defl=0 group="4. PCA9685 Servos" advanced=true
     export function servoSlowTurnDeltaFromDefl(servo: number, delta: number) {
-        let target: number = Math.constrain(_servoDefl[servo - 1] + delta, _servoMin[servo - 1], _servoMax[servo - 1])
-        let newDegree: number = _servoCurrent[servo - 1]
+        let target = Math.constrain(_servoDefl[servo - 1] + delta, _servoMin[servo - 1], _servoMax[servo - 1])
+        let newDegree = _servoCurrent[servo - 1]
         if (Math.abs(target - newDegree) > 0 && Math.abs(target - newDegree) <= _servoDelta[servo - 1]) {
             servoTo(servo, target)
         } else {
@@ -490,7 +492,7 @@ namespace nexusbit {
 
     //% block="PCA9685 all servos gradually move from default|by array %deltas|turning delay (ms) = %delay" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosSlowTurnDeltaFromDefl(deltas: number[], delay: number) {
-        let check: boolean = true
+        let check = true
         if (delay < 0) delay = 0
         if (deltas != null && deltas.length <= _servoNum) {
             while (true) {
@@ -511,7 +513,7 @@ namespace nexusbit {
 
     //% block="PCA9685 all servos gradually move %delta from default if not done" group="4. PCA9685 Servos" advanced=true
     export function servoSlowTurnDeltaFromDeflAndCheck(delta: number[]): boolean {
-        let check: boolean = true
+        let check = true
         if (delta != null && delta.length <= _servoNum) {
             for (let i = 0; i < delta.length; i++) {
                 if (servoIsDeltaFromDefl(i + 1, delta[i], false)) {
@@ -595,17 +597,13 @@ namespace nexusbit {
                 break
             case carDir.left:
                 DC(dcMotor.P13_14, rightSpeed)
-                if (mode == carTurnMode.normal)
-                    DC(dcMotor.P15_16, 0)
-                else if (mode == carTurnMode.rotate)
-                    DC(dcMotor.P15_16, leftSpeed * -1)
+                if (mode == carTurnMode.normal) DC(dcMotor.P15_16, 0)
+                else DC(dcMotor.P15_16, leftSpeed * -1)
                 break
             case carDir.right:
                 DC(dcMotor.P15_16, leftSpeed)
-                if (mode == carTurnMode.normal)
-                    DC(dcMotor.P13_14, 0)
-                else if (mode == carTurnMode.rotate)
-                    DC(dcMotor.P13_14, rightSpeed * -1)
+                if (mode == carTurnMode.normal) DC(dcMotor.P13_14, 0)
+                else DC(dcMotor.P13_14, rightSpeed * -1)
                 break
             case carDir.stop:
                 DC(dcMotor.P15_16, 0)
@@ -619,15 +617,11 @@ namespace nexusbit {
         if (delay < 2300) delay = 2300
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
-                let index: number = -1
-                if (direction == steMotorDir.one)
-                    index = j
-                else if (direction == steMotorDir.two)
-                    index = 3 - j
-                if (i == j)
-                    pins.digitalWritePin(pins_array[index], 1)
-                else
-                    pins.digitalWritePin(pins_array[index], 0)
+                let index = -1
+                if (direction == steMotorDir.one) index = j
+                else index = 3 - j
+                if (i == j) pins.digitalWritePin(pins_array[index], 1)
+                else pins.digitalWritePin(pins_array[index], 0)
             }
             control.waitMicros(delay)
         }
@@ -641,16 +635,12 @@ namespace nexusbit {
         if (delay < 2300) delay = 2300
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
-                let index_1: number = -1
-                let index_2: number = -1
-                if (direction_1 == steMotorDir.one)
-                    index_1 = j
-                else if (direction_1 == steMotorDir.two)
-                    index_1 = 3 - j
-                if (direction_2 == steMotorDir.one)
-                    index_2 = j
-                else if (direction_2 == steMotorDir.two)
-                    index_2 = 3 - j
+                let index_1 = -1
+                let index_2 = -1
+                if (direction_1 == steMotorDir.one) index_1 = j
+                else index_1 = 3 - j
+                if (direction_2 == steMotorDir.one) index_2 = j
+                else index_2 = 3 - j
                 if (i == j) {
                     pins.digitalWritePin(pins_array_1[index_1], 1)
                     pins.digitalWritePin(pins_array_2[index_2], 1)
@@ -668,7 +658,7 @@ namespace nexusbit {
 //% weight=200 color=#e8446d icon="\uf113" block="NexusBot"
 namespace nexusbot {
 
-    let isInAction: boolean = false
+    let isInAction = false
 
     //% block="Servos calibration|(degrees from default:)|Left leg (servo 1) %servo1|Right leg (servo 2) %servo2|Left foot (servo 3) %servo3|Right foot (servo 4) %servo4|Left arm (servo 5) %servo5|Right arm (servo 6) %servo6|Left hand (servo 7) %servo7|Right hand (servo 8) %servo8|then stand still %stand_still" servo1.min=-180 servo1.max=180 servo1.defl=0 servo2.min=-180 servo2.max=180 servo2.defl=0 servo3.min=-180 servo1.max=180 servo3.defl=0 servo4.min=-180 servo1.max=180 servo4.defl=0 servo5.min=-180 servo1.max=180 servo5.defl=0 servo6.min=-180 servo1.max=180 servo6.defl=0 servo7.min=-180 servo1.max=180 servo7.defl=0 servo8.min=-180 servo1.max=180 servo8.defl=0 stand_still.defl=true
     export function robotCalibrate(servo1: number, servo2: number, servo3: number, servo4: number, servo5: number, servo6: number, servo7: number, servo8: number, stand_still: boolean) {
@@ -821,9 +811,8 @@ namespace nexusbot {
     }
 
     function _servosDeltaSeq(seq: number[][]) {
-        for (let i = 0; i < seq.length; i++) {
+        for (let i = 0; i < seq.length; i++)
             nexusbit.servosSlowTurnDeltaFromDefl(seq[i], 0)
-        }
     }
 
     //% block="Movement: %action" action.fieldEditor="gridpicker"
