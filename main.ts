@@ -315,11 +315,13 @@ namespace nexusbit {
 
     //% block="Buzzer play (Hz) %freq duration (ms) %duration" duration.shadow="timePicker" duration.defl=0 freq.shadow="device_note" group="2. Basic"
     export function buzzer(freq: number, duration: number) {
+        pins.analogSetPitchPin(AnalogPin.P0)
         pins.analogPitch(freq, duration)
     }
 
     //% block="Mic triggered ?" group="2. Basic" advanced=true
     export function micTriggered(): boolean {
+        pins.setPull(DigitalPin.P12, PinPullMode.PullNone)
         return pins.digitalReadPin(DigitalPin.P12) == 1 && _boardType == boardType.nexusbit
     }
 
@@ -336,11 +338,6 @@ namespace nexusbit {
     //% block="P12 servo turn to %degree degree(s)" degree.shadow="protractorPicker" degree.defl=180 group="2. Basic"
     export function P12_servo(degree: number) {
         pins.servoWritePin(AnalogPin.P12, Math.constrain(degree, 0, 180))
-    }
-
-    //% block="P12 LED brightness level %level" level.min=0 level.max=1023 level.defl=1023 group="2. Basic" advanced=true
-    export function P12_led(level: number) {
-        pins.analogWritePin(AnalogPin.P12, Math.constrain(level, 0, 1023))
     }
 
     //% block="PCA9685 RGB LED set to|red = %red|green = %green|blue = %blue" red.min=0 red.max=100 red.defl=100 green.min=0 green.max=100 green.defl=100 blue.min=0 blue.max=100 blue.defl=100 group="3. PCA9685 RGB LED" blockExternalInputs=true
