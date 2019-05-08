@@ -2,7 +2,7 @@
 
 ![logo-3](https://user-images.githubusercontent.com/44191076/56939149-3e0f2a80-6b39-11e9-96d0-225bd1d3b2b7.jpg)
 
-![IMG_8292](https://user-images.githubusercontent.com/44191076/56938796-cdffa500-6b36-11e9-9379-e86c138079bb.JPG)
+![IMG_0035](https://user-images.githubusercontent.com/44191076/57355314-5538c280-71a0-11e9-8560-fbc70efd9578.JPG)
 
 Nexus:bit is a powerful [BBC micro:bit](https://microbit.org/) multiple-purpose extension board made by [Taiwan Coding Education Association](http://www.beyond-coding.org.tw/). Its features include:
 
@@ -14,11 +14,11 @@ Nexus:bit is a powerful [BBC micro:bit](https://microbit.org/) multiple-purpose 
 * 5V/3.3V power output pins
 * full breakout pins from micro:bit and extra I2C pins
 
-![IMG_0004](https://user-images.githubusercontent.com/44191076/56938974-fb991e00-6b37-11e9-849b-de573c8e856f.JPG)
+![IMG_0006](https://user-images.githubusercontent.com/44191076/57355358-6a155600-71a0-11e9-912c-9fcd4bfde060.JPG)
 
 You can control the Nexus:bit by using standard MakeCode blocks and third party PCA9685/Sonar extensions. However this extension/package comes with easy-to-use blocks for all features of Nexus:bit, as well as a library of powerful PCA9685 servo control functions which can be used on all kinds of robots.
 
-![IMG_8244](https://user-images.githubusercontent.com/44191076/56938888-50886480-6b37-11e9-8371-d3cc1d953108.JPG)
+![IMG_0040](https://user-images.githubusercontent.com/44191076/57355393-7ef1e980-71a0-11e9-9b1b-28236775f7b7.JPG)
 
 Video demo: https://www.youtube.com/watch?v=aCaN0LK8dZg
 
@@ -30,15 +30,19 @@ This extension is also appliable to Thunder:bit V1/V2 motor boards (you'll need 
 
 In the [MakeCode editor](https://makecode.microbit.org/) go to Advanced -> +Extension... and copy/paste the url https://github.com/alankrantas/pxt-Nexusbit into the serach box. Press enter and you'll be able to import the extension.
 
-## Nexus:bit/NexutBot Online Manual
+## NexutBot Calibration
 
-(working in progress)
+Use the calibration block in the NexusBot section, and first download it onto your NexusBot's micro:bit without any changes.
 
-## Where to Buy Nexus:bit/NexutBot
+Power up the robot and all servos should be locked to default position (90 degrees for legs and feet, 0/180 degrees for arms and hands).
 
-(working in progress)
+Adjust servos so that the robot more or less stands still, with its hands close to body as much as possible, in example of the picture below.
 
-## Test Code
+![IMG_0033](https://user-images.githubusercontent.com/44191076/57355621-00497c00-71a1-11e9-89e4-7fcddb55f2cb.JPG)
+
+Then calibrate all servos' default position, until legs are straight, feet are flat on the ground and hands are pointed directly downward.
+
+## Nexus:bit Test Code
 
 ```
 let index = 0
@@ -127,9 +131,13 @@ basic.forever(function () {
 })
 ```
 
-## Author
+## Extension Author
 
-Alan Wang of Taiwan Coding Education Association
+Alan Wang, micro:bit Education Material Developer of Taiwan Coding Education Association
+
+## Nexus:bit/NexusBot Product Information
+
+Check out the website of TCEA for more information, including where to buy them: [Nexus:bit/NexusBot](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89) (English version will soon be available)
 
 ## License
 
