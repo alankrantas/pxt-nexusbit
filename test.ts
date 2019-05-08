@@ -1,84 +1,38 @@
-let index = 0
+nexusbit.servosToDegree([90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90])
 input.onButtonPressed(Button.A, function () {
-    music.beginMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
+    nexusbit.servosToDegree([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    if (Math.randomBoolean()) {
+        music.beginMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
+    } else {
+        music.beginMelody(music.builtInMelody(Melodies.PowerDown), MelodyOptions.Once)
+    }
 })
 input.onButtonPressed(Button.B, function () {
-    nexusbit.vibrator(1023, 1000)
-    nexusbit.vibrator(512, 1000)
-    nexusbit.vibrator(0, 0)
+    nexusbit.servosToDegree([180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180])
+    nexusbit.vibrator(512, 500)
+    nexusbit.vibrator(128, 500)
 })
-index = 0
-nexusbit.selectBoard(boardType.nexusbit)
-nexusbit.rgbLedPreset(colorType.red, 100)
-nexusbit.P12_servo(90)
-nexusbit.servosToDefl()
-basic.pause(1000)
-nexusbit.rgbLedPreset(colorType.green, 100)
-nexusbit.P12_servo(0)
-nexusbit.servosToDegree([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-nexusbit.DC_car(
-carDir.forward,
-carTurnMode.normal,
-100,
-100
-)
-basic.pause(1000)
-nexusbit.rgbLedPreset(colorType.blue, 100)
-nexusbit.P12_servo(180)
-nexusbit.servosToDegree([180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180])
-nexusbit.DC_car(
-carDir.backward,
-carTurnMode.normal,
-100,
-100
-)
-basic.pause(1000)
-nexusbit.rgbLedPreset(colorType.white, 100)
 basic.forever(function () {
     if (nexusbit.micTriggered()) {
-        basic.showIcon(IconNames.Happy)
+        basic.showIcon(IconNames.Yes, 100)
     } else {
         basic.clearScreen()
     }
     if (nexusbit.joystickToDir(joystickDir.forward)) {
-        basic.showLeds(`
-            . . # . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
+        nexusbit.rgbLedPreset(colorType.white, 100)
+        nexusbit.DC(dcMotor.P15_16, 100)
     } else if (nexusbit.joystickToDir(joystickDir.backward)) {
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . # . .
-            `)
+        nexusbit.rgbLedPreset(colorType.blue, 100)
+        nexusbit.DC(dcMotor.P15_16, -100)
     } else if (nexusbit.joystickToDir(joystickDir.left)) {
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            # . . . .
-            . . . . .
-            . . . . .
-            `)
+        nexusbit.rgbLedPreset(colorType.red, 100)
+        nexusbit.DC(dcMotor.P13_14, 100)
     } else if (nexusbit.joystickToDir(joystickDir.right)) {
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . #
-            . . . . .
-            . . . . .
-            `)
+        nexusbit.rgbLedPreset(colorType.green, 100)
+        nexusbit.DC(dcMotor.P13_14, -100)
     } else {
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . # . .
-            . . . . .
-            . . . . .
-            `)
+        nexusbit.rgbLedPreset(colorType.off, 100)
+        nexusbit.DC(dcMotor.P13_14, 0)
+        nexusbit.DC(dcMotor.P15_16, 0)
     }
 })
