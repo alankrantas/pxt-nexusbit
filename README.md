@@ -94,7 +94,7 @@ Email: alan@beyond-coding.org.tw
 
 ## Nexus:bit/NexusBot Product Information
 
-Check out the website of TCEA for more information, including where to buy them: [Nexus:bit/NexusBot](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89) (English version will soon be available)
+Check out our TCEA website for more information, including where to buy them: [Nexus:bit/NexusBot](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89) (English version will be available soon).
 
 ## License
 
