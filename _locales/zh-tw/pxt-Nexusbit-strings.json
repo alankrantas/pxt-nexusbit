@@ -120,7 +120,7 @@
   "nexusbot.heardSound|block": "聽見聲音 ?",
   "nexusbot.robotAction|block": "動作: %action",
   "nexusbot.robotCalibrate|block": "伺服馬達校正|(自預設位置的變量:)|左腿 (馬達1) %servo1|右腿 (馬達2) %servo2|左腳 (馬達3) %servo3|右腳 (馬達4) %servo4|左臂 (馬達5) %servo5|右臂 (馬達6) %servo6|左手 (馬達7) %servo7|右手 (馬達8) %servo8|校正後站定 %stand_still",
-  "nexusbot.robotCar|block": "小車 %direction 速度 %speed" 
+  "nexusbot.robotCar|block": "小車 %direction 速度 %speed",
   "nexusbot.robotSpeed|block": "伺服馬達逐次轉動速度 %speed",
   "nexusbot.robotStandstill|block": "站定",
   "nexusbot.robot_walk|block": "移動方式: %action",
