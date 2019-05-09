@@ -30,13 +30,13 @@ You can in fact control Nexus:bit by using only standard MakeCode blocks plus th
 
 Video demo: https://www.youtube.com/watch?v=aCaN0LK8dZg
 
-NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. This extension has some basic control blocks for this robot.
+NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. This extension comes with basic control blocks for this robot.
 
 This extension is also appliable to Thunder:bit V1/V2 motor boards (you'll need to select the board type), which is similar to Nexus:bit except microphone and have only 4 PCA9685 servo pins.
 
 ## Relative-Degree and Gradual Servo Control
 
-In this extension, one of the major function is to control servos by relative degrees, or vectors from their default position. This allows users to define and repeat more precise servo movements after simple calibrations. The extension also constrains servos' target position to be within 0-180 degrees, or whatever range the user defined.
+One major function of this extension is to control servos by relative degrees, or vectors from their default position. This allows users to define and repeat more precise servo movements after simple calibrations. The extension also constrains servos' target position to be within 0-180 degrees, or whatever range the user defined.
 
 For the example below:
 
@@ -101,7 +101,6 @@ basic.forever(function () {
     	
     }
 })
-
 ```
 
 In the NexusBot section some of the leg movements are already implemented, so you can simply coded it as
@@ -140,7 +139,7 @@ Finally calibrate all servos' default position in the editor, until legs are str
 
 ## Nexus:bit Test Code
 
-To test Nexus:bit, connect joystick board, two DC motors and at least one servo to the expansion board, and flash the following code onto your micro:bit. Move the joystick around and press A/B to test various functions. When the mic is triggered the micro:bit would show a "yes" picture on its LED screen.
+To test Nexus:bit, connect joystick board, two DC motors and at least one servo to the expansion board, and flash the following code onto your micro:bit. Move the joystick around and press A/B to test various functions. When the mic is triggered the micro:bit would display a "yes" on its LED screen.
 
 ```
 nexusbit.servosToDegree([90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90])
