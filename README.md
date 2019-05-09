@@ -1,6 +1,6 @@
-# MakeCode Editor Extension for Nexus:bit Expansion Board and NexusBot Biped Robot (BETA)
+# MakeCode Editor Extension for Nexus:bit and NexusBot
 
-![logo-3](https://user-images.githubusercontent.com/44191076/56939149-3e0f2a80-6b39-11e9-96d0-225bd1d3b2b7.jpg)
+![logo](https://user-images.githubusercontent.com/44191076/57426674-c0db6800-7252-11e9-8a10-e25298072f5b.jpg)
 
 ![IMG_0035](https://user-images.githubusercontent.com/44191076/57355314-5538c280-71a0-11e9-8560-fbc70efd9578.JPG)
 
@@ -85,12 +85,12 @@ basic.forever(function () {
         nexusbit.DC(dcMotor.P15_16, 0)
     }
 })
-
 ```
 
 ## Extension Author
 
 Alan Wang, micro:bit Education Material Developer of Taiwan Coding Education Association
+Email: alan@beyond-coding.org.tw
 
 ## Nexus:bit/NexusBot Product Information
 
