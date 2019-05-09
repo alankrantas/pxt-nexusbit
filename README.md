@@ -22,6 +22,8 @@ Features of Nexus:bit include:
 * 5V/3.3V power output pins
 * full breakout pins of micro:bit with additional I2C/SPI pins
 
+The onboard PCA9685 chip has the I2C address of 0x40 (64).
+
 ![IMG_0006](https://user-images.githubusercontent.com/44191076/57355358-6a155600-71a0-11e9-912c-9fcd4bfde060.JPG)
 
 You can in fact control Nexus:bit by using only standard MakeCode blocks plus third party PCA9685/Sonar extensions. However this extension/package enables users to make things more quickly with a series of bonus functions.
@@ -185,6 +187,7 @@ basic.forever(function () {
 ## Extension Author
 
 Alan Wang, micro:bit Education Material Developer of Taiwan Coding Education Association
+
 Email: alan@beyond-coding.org.tw
 
 ## Nexus:bit/NexusBot Product Information
