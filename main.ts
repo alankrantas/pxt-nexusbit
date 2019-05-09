@@ -581,7 +581,7 @@ namespace nexusbit {
         }
     }
 
-    //% block="2WD DC motor car|direction %carDir|turn mode %mode|right motor speed %rightSpeed|left motor speed %leftSpeed" rightSpeed.min=0 rightSpeed.max=100 rightSpeed.defl=100 leftSpeed.min=0 leftSpeed.max=100 leftSpeed.defl=100 group="5. DC/Stepper Motors" blockExternalInputs=true advanced=true
+    //% block="2WD DC motor car|direction %direction|turn mode %mode|right motor speed %rightSpeed|left motor speed %leftSpeed" rightSpeed.min=0 rightSpeed.max=100 rightSpeed.defl=100 leftSpeed.min=0 leftSpeed.max=100 leftSpeed.defl=100 direction.fieldEditor="gridpicker" group="5. DC/Stepper Motors" blockExternalInputs=true advanced=true
     export function DC_car(direction: carDir, mode: carTurnMode, rightSpeed: number, leftSpeed: number) {
         switch (direction) {
             case carDir.forward:
@@ -666,9 +666,31 @@ namespace nexusbot {
         }
     }
 
-    //% block="Servos gradual turn speed %speed" speed.min=1 speed.max=10 speed.defl=5
+    //% block="Servos gradual turn speed %speed" speed.min=1 speed.max=10 speed.defl=5 advanced=true
     export function robotSpeed(speed: number) {
         nexusbit.servoSetDelta([speed, speed, speed, speed, speed, speed, speed, speed])
+    }
+
+    //% block="Car %direction speed %speed" speed.min=0 speed.max=100 speed.defl=50 direction.fieldEditor="gridpicker" advanced=true
+    export function robotCar(direction: carDir, speed: number) {
+        let newDir: carDir
+        switch (direction) {
+            case carDir.forward:
+                newDir = carDir.left
+                break
+            case carDir.backward:
+                newDir = carDir.right
+                break
+            case carDir.left:
+                newDir = carDir.forward
+                break
+            case carDir.right:
+                newDir = carDir.backward
+                break
+            case carDir.stop:
+                newDir = carDir.stop
+        }
+        nexusbit.DC_car(newDir, carTurnMode.rotate, speed, speed)
     }
 
     //% block="Stand still"
