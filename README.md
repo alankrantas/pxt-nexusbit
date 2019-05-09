@@ -34,9 +34,103 @@ NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. T
 
 This extension is also appliable to Thunder:bit V1/V2 motor boards (you'll need to select the board type), which is similar to Nexus:bit except microphone and have only 4 PCA9685 servo pins.
 
+## Relative-Degree and Gradual Servo Control
+
+In this extension, one of the major function is to control servos by relative degrees, or vectors from their default position. This allows users to define and repeat more precise servo movements after simple calibrations. The extension also constrains servos' target position to be within 0-180 degrees, or whatever range the user defined.
+
+For the example below:
+
+```
+nexusbit.servoConfig(
+1,
+80,
+30,
+150,
+5
+)
+nexusbit.servosToDefl()
+basic.forever(function () {
+    nexusbit.servoDeltaFromDefl(1, -60)
+    basic.pause(1000)
+    nexusbit.servoDeltaFromDefl(1, 60)
+    basic.pause(1000)
+})
+```
+
+The default position of Servo 1 (on PCA9685) is set to 80 degrees with min and max degrees as 30 and 150. In the loop the servo would be turned to -60 (20) and +60 (140) degrees from its default position. However, due to the min constraint of 30 the servo would only be allowed to turn to 30 degrees.
+
+The following code demostrates how to gradually (slowly, smoothly) turn 4 servos of a OTTO-like biped robot (first two servos are legs, last two are feet):
+
+```
+basic.forever(function () {
+    nexusbit.servosSlowTurnDeltaFromDefl(
+    [nexusbit.return_null(), nexusbit.return_null(), 40, 15],
+    0
+    )
+    nexusbit.servosSlowTurnDeltaFromDefl(
+    [20, 20, nexusbit.return_null(), nexusbit.return_null()],
+    0
+    )
+    nexusbit.servosSlowTurnDeltaFromDefl(
+    [nexusbit.return_null(), nexusbit.return_null(), -15, -40],
+    0
+    )
+    nexusbit.servosSlowTurnDeltaFromDefl(
+    [-20, -20, nexusbit.return_null(), nexusbit.return_null()],
+    0
+    )
+})
+```
+
+The servo turning direction may be different on different robot configurations.
+
+It can also be used like this, using while() loops which you can stop/break out whenever you want:
+
+```
+basic.forever(function () {
+    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([nexusbit.return_null(), nexusbit.return_null(), 40, 15])) {
+    	
+    }
+    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([20, 20, nexusbit.return_null(), nexusbit.return_null()])) {
+    	
+    }
+    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([nexusbit.return_null(), nexusbit.return_null(), -15, -40])) {
+    	
+    }
+    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([-20, -20, nexusbit.return_null(), nexusbit.return_null()])) {
+    	
+    }
+})
+
+```
+
+In the NexusBot section some of the leg movements are already implemented, so you can simply coded it as
+
+```
+basic.forever(function () {
+    nexusbot.robot_walk(botWalk.forward)
+})
+```
+
+It is not recommended to gradually turn more than 4 servos at once, since this would slow down all servos' turning speed and make the movement less usable.
+
 ## Calibrate NexutBot
 
 To calibrate the robot, use the calibration block in the NexusBot section without any changes and download the code onto your micro:bit.
+
+```
+nexusbot.robotCalibrate(
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+true
+)
+```
 
 Power up the robot and all servos should be turned to default position (90 degrees for legs and feet, 0 or 180 degrees for arms and hands). Adjust each servo's installed position so that the robot stands still more or less, with both hands hug close to body (demostrated in the picture below).
 
@@ -45,6 +139,8 @@ Power up the robot and all servos should be turned to default position (90 degre
 Finally calibrate all servos' default position in the editor, until legs are straight, feet are flat on the ground and hands are pointed directly downward. Save the calibrated code in your computer for future use.
 
 ## Nexus:bit Test Code
+
+To test Nexus:bit, connect joystick board, two DC motors and at least one servo to the expansion board, and flash the following code onto your micro:bit. Move the joystick around and press A/B to test various functions. When the mic is triggered the micro:bit would show a "yes" picture on its LED screen.
 
 ```
 nexusbit.servosToDegree([90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90])
