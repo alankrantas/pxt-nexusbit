@@ -4,13 +4,15 @@
 
 ![IMG_0035](https://user-images.githubusercontent.com/44191076/57355314-5538c280-71a0-11e9-8560-fbc70efd9578.JPG)
 
-Nexus:bit is a powerful [BBC micro:bit](https://microbit.org/) multiple-purpose extension board made by [Taiwan Coding Education Association](http://www.beyond-coding.org.tw/).
+Nexus:bit is a powerful [BBC micro:bit](https://microbit.org/) multiple-purpose extension board made by [Taiwan Coding Education Association](http://www.beyond-coding.org.tw/). You can program Nexus:bit by using only standard MakeCode blocks plus third party PCA9685/Sonar extensions; however this extension/package provides various functions which are more powerful and easier to use.
 
 ## Import Extension
 
 In the [MakeCode editor](https://makecode.microbit.org/) go to Advanced -> +Extension... and copy/paste the following url https://github.com/alankrantas/pxt-Nexusbit into the serach box. Press enter and you'll be able to import it.
 
 ## Product Information
+
+Check out our TCEA website for more information, including where to buy them: [Nexus:bit/NexusBot](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89). (English version will be available soon).
 
 Features of Nexus:bit include:
 
@@ -25,8 +27,6 @@ Features of Nexus:bit include:
 The onboard PCA9685 chip has the I2C address of 0x40 (64).
 
 ![IMG_0006](https://user-images.githubusercontent.com/44191076/57355358-6a155600-71a0-11e9-912c-9fcd4bfde060.JPG)
-
-You can in fact control Nexus:bit by using only standard MakeCode blocks plus third party PCA9685/Sonar extensions. However this extension/package enables users to make things more quickly with a series of bonus functions.
 
 ![IMG_0040](https://user-images.githubusercontent.com/44191076/57355393-7ef1e980-71a0-11e9-9b1b-28236775f7b7.JPG)
 
@@ -189,10 +189,6 @@ basic.forever(function () {
 Alan Wang, micro:bit Education Material Developer of Taiwan Coding Education Association
 
 Email: alan@beyond-coding.org.tw
-
-## Nexus:bit/NexusBot Product Information
-
-Check out our TCEA website for more information, including where to buy them: [Nexus:bit/NexusBot](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89) (English version will be available soon).
 
 ## License
 
