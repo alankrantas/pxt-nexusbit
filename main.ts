@@ -259,9 +259,9 @@ namespace nexusbit {
 
     //% block="Board information (see serial output)" group="1. Setup" advanced=true
     export function info() {
-        serial.writeLine("Nexus:bit and NexusBot are products made by Taiwan Coding Education Association (TCEA)")
+        serial.writeLine("Nexus:bit and NexusBot are products by Taiwan Coding Education Association (TCEA)")
         serial.writeLine("https://www.beyond-coding.org.tw/")
-        serial.writeLine("Extension by Alan Wang, May 2019. Check out instructions in the following link:")
+        serial.writeLine("Extension by Alan Wang, 2019. Check out more info in the following link:")
         serial.writeLine("https://github.com/alankrantas/pxt-Nexusbit")
     }
 
@@ -385,7 +385,7 @@ namespace nexusbit {
 
     //% block="Configure PCA9685 servo no. %servo|default degree(s) = %deflDegree|min degree(s) = %minDegree|max degree(s) = %maxDegree|gradually turning degree(s) = %delta" servo.min=1 servo.max=12 servo.defl=1 deflDegree.shadow="protractorPicker" deflDegree.defl=90 minDegree.shadow="protractorPicker" minDegree.defl=0 maxDegree.shadow="protractorPicker" maxDegree.defl=180 delta.shadow="protractorPicker" delta.defl=5 group="4. PCA9685 Servos" advanced=true
     export function servoConfig(servo: number, deflDegree: number, minDegree: number, maxDegree: number, delta: number) {
-        if (servo <= _servoNum) {
+        if (servo > 0 && servo <= _servoNum) {
             _servoMin[servo - 1] = Math.constrain(minDegree, 0, 180)
             if (Math.constrain(maxDegree, 0, 180) >= minDegree) _servoMax[servo - 1] = Math.constrain(maxDegree, 0, 180)
             else _servoMax[servo - 1] = _servoMin[servo - 1]
@@ -396,15 +396,18 @@ namespace nexusbit {
 
     //% block="Adjust PCA9685 servos default position|by array %deflDegrees" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosDeflAdjust(deflDegrees: number[]) {
-        if (deflDegrees != null && deflDegrees.length <= _servoNum)
-            for (let i = 0; i < deflDegrees.length; i++) _servoDefl[i] = Math.constrain(_servoDefl[i] + deflDegrees[i], _servoMin[i], _servoMax[i])
+        if (deflDegrees != null)
+            for (let i = 0; i < deflDegrees.length; i++) {
+                if (i >= _servoNum) break
+                _servoDefl[i] = Math.constrain(_servoDefl[i] + deflDegrees[i], _servoMin[i], _servoMax[i])
+            }
     }
 
     //% block="Set PCA9685 servos greadually turing degree(s)|by array %deltas" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servoSetDelta(deltas: number[]) {
         if (deltas != null)
             for (let i = 0; i < deltas.length; i++) {
-                if (i == _servoNum) break
+                if (i >= _servoNum) break
                 if (deltas[i] != null && deltas[i] > 0) _servoDelta[i] = Math.constrain(deltas[i], 0, 180)
             }
     }
@@ -413,7 +416,7 @@ namespace nexusbit {
     export function servoTo(servo: number, degree: number) {
         _initialize()
         degree = Math.constrain(degree, _servoMin[servo - 1], _servoMax[servo - 1])
-        if (servo <= _servoNum) {
+        if (servo > 0 && servo <= _servoNum) {
             _servoCurrent[servo - 1] = degree
             PCA9685.setServoPosition(servo, degree, 64)
         }
@@ -489,20 +492,10 @@ namespace nexusbit {
 
     //% block="PCA9685 all servos gradually move from default|by array %deltas|turning delay (ms) = %delay" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosSlowTurnDeltaFromDefl(deltas: number[], delay: number) {
-        let check = true
         if (delay < 0) delay = 0
-        if (deltas != null && deltas.length <= _servoNum) {
+        if (deltas != null) {
             while (true) {
-                check = true
-                for (let i = 0; i < deltas.length; i++) {
-                    if (deltas[i] != null) {
-                        if (servoIsDeltaFromDefl(i + 1, deltas[i], false)) {
-                            servoSlowTurnDeltaFromDefl(i + 1, deltas[i])
-                            if (check) check = false
-                        }
-                    }
-                }
-                if (check) break
+                if (servoSlowTurnDeltaFromDeflAndCheck(deltas)) break
                 if (delay > 0) basic.pause(delay)
             }
         }
@@ -511,8 +504,9 @@ namespace nexusbit {
     //% block="PCA9685 all servos gradually move %delta from default if not done" group="4. PCA9685 Servos" advanced=true
     export function servoSlowTurnDeltaFromDeflAndCheck(delta: number[]): boolean {
         let check = true
-        if (delta != null && delta.length <= _servoNum) {
+        if (delta != null) {
             for (let i = 0; i < delta.length; i++) {
+                if (i >= _servoNum) break
                 if (servoIsDeltaFromDefl(i + 1, delta[i], false)) {
                     servoSlowTurnDeltaFromDefl(i + 1, delta[i])
                     if (check) check = false
@@ -530,18 +524,22 @@ namespace nexusbit {
 
     //% block="All PCA9685 servos turn to degrees %degree" group="4. PCA9685 Servos"
     export function servosToDegree(degrees: number[]) {
-        if (degrees != null && degrees.length <= _servoNum)
-            for (let i = 0; i < degrees.length; i++)
+        if (degrees != null)
+            for (let i = 0; i < degrees.length; i++) {
+                if (i >= _servoNum) break
                 if (degrees[i] != null)
-                    servoTo(i + 1, Math.constrain(degrees[i], 0, 180))
+                    servoTo(i + 1, degrees[i])
+            }
     }
 
     //% block="All PCA9685 servos move to degrees %deltas from default" group="4. PCA9685 Servos" blockExternalInputs=true
     export function servosToDeltaFromDefl(deltas: number[]) {
         if (deltas != null && deltas.length <= _servoNum)
-            for (let i = 0; i < deltas.length; i++)
+            for (let i = 0; i < deltas.length; i++) {
+                if (i >= _servoNum) break
                 if (deltas[i] != null)
-                    servoTo(i + 1, Math.constrain(_servoDefl[i] + deltas[i], 0, 180))
+                    servoTo(i + 1, _servoDefl[i] + deltas[i])
+            }
     }
 
     //% block="(null)" group="4. PCA9685 Servos" advanced=true
