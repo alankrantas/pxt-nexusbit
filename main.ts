@@ -495,7 +495,7 @@ namespace nexusbit {
         if (delay < 0) delay = 0
         if (deltas != null) {
             while (true) {
-                if (servoSlowTurnDeltaFromDeflAndCheck(deltas)) break
+                if (!servoSlowTurnDeltaFromDeflAndCheck(deltas)) break
                 if (delay > 0) basic.pause(delay)
             }
         }
