@@ -488,7 +488,7 @@ namespace nexusbit {
     //% block="PCA9685 all servos gradually move from default|by array %deltas|turning delay (ms) = %delay" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosSlowTurnDeltaFromDefl(deltas: number[], delay: number) {
         if (delay < 0) delay = 0
-        if (deltas != null) while (servoSlowTurnDeltaFromDeflAndCheck(deltas)) if (delay > 0) basic.pause(delay)
+        while (servoSlowTurnDeltaFromDeflAndCheck(deltas)) if (delay > 0) basic.pause(delay)
     }
 
     //% block="PCA9685 all servos gradually move %delta from default if not done" group="4. PCA9685 Servos" advanced=true
