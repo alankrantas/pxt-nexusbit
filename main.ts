@@ -1,6 +1,6 @@
 /**
-* MakeCode editor extension For BBC micro:bit expansion board "Nexus:bit" and Robot "NexusBot" from Taiwan Coding Education Association (TCEA)
-* By Alan Wang, May 2019
+* MakeCode extension For "Nexus:bit" and "NexusBot" from Taiwan Coding Education Association (TCEA)
+* By Alan Wang, 2019
 */
 
 enum boardType {
@@ -213,10 +213,11 @@ enum botWalk {
     //% block="shuffle dance"
 }
 
+let _boardType: boardType = boardType.nexusbit
+
 //% weight=200 color=#009fb7 icon="\uf1aa" block="Nexus:bit"
 namespace nexusbit {
 
-    let _boardType: boardType = boardType.nexusbit
     let _joystickSen = joystickSen.normal
     let _servoNum = 12
     let _rLedPin = 15
@@ -396,20 +397,16 @@ namespace nexusbit {
 
     //% block="Adjust PCA9685 servos default position|by array %deflDegrees" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosDeflAdjust(deflDegrees: number[]) {
-        if (deflDegrees != null)
-            for (let i = 0; i < deflDegrees.length; i++) {
-                if (i >= _servoNum) break
+        if (deflDegrees != null && deflDegrees.length <= _servoNum)
+            for (let i = 0; i < deflDegrees.length; i++)
                 _servoDefl[i] = Math.constrain(_servoDefl[i] + deflDegrees[i], _servoMin[i], _servoMax[i])
-            }
     }
 
     //% block="Set PCA9685 servos greadually turing degree(s)|by array %deltas" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servoSetDelta(deltas: number[]) {
-        if (deltas != null)
-            for (let i = 0; i < deltas.length; i++) {
-                if (i >= _servoNum) break
+        if (deltas != null && deltas.length <= _servoNum)
+            for (let i = 0; i < deltas.length; i++)
                 if (deltas[i] != null && deltas[i] > 0) _servoDelta[i] = Math.constrain(deltas[i], 0, 180)
-            }
     }
 
     //% block="PCA9685 servo no. %servo turn to %degree degree(s)" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=180 group="4. PCA9685 Servos"
@@ -460,10 +457,8 @@ namespace nexusbit {
 
     //% block="PCA9685 servo no. %servo gradually turn toward %direction degree(s)" servo.min=1 servo.max=12 servo.defl=1 group="4. PCA9685 Servos" advanced=true
     export function servoSlowTurnMinMax(servo: number, direction: servoDir) {
-        if (direction == servoDir.min)
-            servoSlowTurn(servo, _servoMin[servo - 1])
-        else if (direction == servoDir.max)
-            servoSlowTurn(servo, _servoMax[servo - 1])
+        if (direction == servoDir.min) servoSlowTurn(servo, _servoMin[servo - 1])
+        else if (direction == servoDir.max) servoSlowTurn(servo, _servoMax[servo - 1])
     }
 
     //% block="PCA9685 servo no. %servo at %direction degree(s) %check ?" servo.min=1 servo.max=12 servo.defl=1 group="4. PCA9685 Servos" advanced=true
@@ -493,20 +488,14 @@ namespace nexusbit {
     //% block="PCA9685 all servos gradually move from default|by array %deltas|turning delay (ms) = %delay" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servosSlowTurnDeltaFromDefl(deltas: number[], delay: number) {
         if (delay < 0) delay = 0
-        if (deltas != null) {
-            while (true) {
-                if (!servoSlowTurnDeltaFromDeflAndCheck(deltas)) break
-                if (delay > 0) basic.pause(delay)
-            }
-        }
+        if (deltas != null) while (servoSlowTurnDeltaFromDeflAndCheck(deltas)) if (delay > 0) basic.pause(delay)
     }
 
     //% block="PCA9685 all servos gradually move %delta from default if not done" group="4. PCA9685 Servos" advanced=true
     export function servoSlowTurnDeltaFromDeflAndCheck(delta: number[]): boolean {
         let check = true
-        if (delta != null) {
+        if (delta != null && delta.length <= _servoNum) {
             for (let i = 0; i < delta.length; i++) {
-                if (i >= _servoNum) break
                 if (servoIsDeltaFromDefl(i + 1, delta[i], false)) {
                     servoSlowTurnDeltaFromDefl(i + 1, delta[i])
                     if (check) check = false
@@ -524,22 +513,18 @@ namespace nexusbit {
 
     //% block="All PCA9685 servos turn to degrees %degree" group="4. PCA9685 Servos"
     export function servosToDegree(degrees: number[]) {
-        if (degrees != null)
-            for (let i = 0; i < degrees.length; i++) {
-                if (i >= _servoNum) break
+        if (degrees != null && degrees.length <= _servoNum)
+            for (let i = 0; i < degrees.length; i++)
                 if (degrees[i] != null)
                     servoTo(i + 1, degrees[i])
-            }
     }
 
     //% block="All PCA9685 servos move to degrees %deltas from default" group="4. PCA9685 Servos" blockExternalInputs=true
     export function servosToDeltaFromDefl(deltas: number[]) {
         if (deltas != null && deltas.length <= _servoNum)
-            for (let i = 0; i < deltas.length; i++) {
-                if (i >= _servoNum) break
+            for (let i = 0; i < deltas.length; i++)
                 if (deltas[i] != null)
                     servoTo(i + 1, _servoDefl[i] + deltas[i])
-            }
     }
 
     //% block="(null)" group="4. PCA9685 Servos" advanced=true
@@ -657,7 +642,10 @@ namespace nexusbot {
 
     //% block="Servos calibration|(degrees from default:)|Left leg (servo 1) %servo1|Right leg (servo 2) %servo2|Left foot (servo 3) %servo3|Right foot (servo 4) %servo4|Left arm (servo 5) %servo5|Right arm (servo 6) %servo6|Left hand (servo 7) %servo7|Right hand (servo 8) %servo8|then stand still %stand_still" servo1.min=-180 servo1.max=180 servo1.defl=0 servo2.min=-180 servo2.max=180 servo2.defl=0 servo3.min=-180 servo1.max=180 servo3.defl=0 servo4.min=-180 servo1.max=180 servo4.defl=0 servo5.min=-180 servo1.max=180 servo5.defl=0 servo6.min=-180 servo1.max=180 servo6.defl=0 servo7.min=-180 servo1.max=180 servo7.defl=0 servo8.min=-180 servo1.max=180 servo8.defl=0 stand_still.defl=true
     export function robotCalibrate(servo1: number, servo2: number, servo3: number, servo4: number, servo5: number, servo6: number, servo7: number, servo8: number, stand_still: boolean) {
-        nexusbit.servosDeflAdjust([servo1, servo2, servo3, servo4, servo5 + 90, servo6 - 90, servo7 - 90, servo8 + 90])
+        if (_boardType == boardType.nexusbit)
+            nexusbit.servosDeflAdjust([servo1, servo2, servo3, servo4, servo5 + 90, servo6 - 90, servo7 - 90, servo8 + 90])
+        else
+            nexusbit.servosDeflAdjust([servo1, servo2, servo3, servo4])
         if (stand_still) {
             robotStandstill()
             basic.pause(500)
@@ -666,7 +654,10 @@ namespace nexusbot {
 
     //% block="Servos gradual turn speed %speed" speed.min=1 speed.max=10 speed.defl=5 advanced=true
     export function robotSpeed(speed: number) {
-        nexusbit.servoSetDelta([speed, speed, speed, speed, speed, speed, speed, speed])
+        if (_boardType == boardType.nexusbit)
+            nexusbit.servoSetDelta([speed, speed, speed, speed, speed, speed, speed, speed])
+        else
+            nexusbit.servoSetDelta([speed, speed, speed, speed])
     }
 
     //% block="Car %direction speed %speed" speed.min=0 speed.max=100 speed.defl=50 direction.fieldEditor="gridpicker" advanced=true
