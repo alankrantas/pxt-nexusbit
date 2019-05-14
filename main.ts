@@ -386,7 +386,7 @@ namespace nexusbit {
 
     //% block="Configure PCA9685 servo no. %servo|default degree(s) = %deflDegree|min degree(s) = %minDegree|max degree(s) = %maxDegree|gradually turning degree(s) = %delta" servo.min=1 servo.max=12 servo.defl=1 deflDegree.shadow="protractorPicker" deflDegree.defl=90 minDegree.shadow="protractorPicker" minDegree.defl=0 maxDegree.shadow="protractorPicker" maxDegree.defl=180 delta.shadow="protractorPicker" delta.defl=5 group="4. PCA9685 Servos" advanced=true
     export function servoConfig(servo: number, deflDegree: number, minDegree: number, maxDegree: number, delta: number) {
-        if (servo <= _servoNum) {
+        if (servo > 0 && servo <= _servoNum) {
             _servoMin[servo - 1] = Math.constrain(minDegree, 0, 180)
             if (Math.constrain(maxDegree, 0, 180) >= minDegree) _servoMax[servo - 1] = Math.constrain(maxDegree, 0, 180)
             else _servoMax[servo - 1] = _servoMin[servo - 1]
@@ -403,11 +403,8 @@ namespace nexusbit {
 
     //% block="Set PCA9685 servos greadually turing degree(s)|by array %deltas" group="4. PCA9685 Servos" blockExternalInputs=true advanced=true
     export function servoSetDelta(deltas: number[]) {
-        if (deltas != null)
-            for (let i = 0; i < deltas.length; i++) {
-                if (i == _servoNum) break
-                if (deltas[i] != null && deltas[i] > 0) _servoDelta[i] = Math.constrain(deltas[i], 0, 180)
-            }
+        if (deltas != null && deltas.length <= _servoNum)
+            for (let i = 0; i < deltas.length; i++) if (deltas[i] != null && deltas[i] > 0) _servoDelta[i] = Math.constrain(deltas[i], 0, 180)
     }
 
     //% block="PCA9685 servo no. %servo turn to %degree degree(s)" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=180 group="4. PCA9685 Servos"
