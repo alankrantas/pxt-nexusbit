@@ -675,28 +675,6 @@ namespace nexusbot {
             nexusbit.servoSetDelta([speed, speed, speed, speed])
     }
 
-    //% block="Car %direction speed %speed" speed.min=0 speed.max=100 speed.defl=50 direction.fieldEditor="gridpicker" advanced=true
-    export function robotCar(direction: carDir, speed: number) {
-        let newDir: carDir
-        switch (direction) {
-            case carDir.forward:
-                newDir = carDir.left
-                break
-            case carDir.backward:
-                newDir = carDir.right
-                break
-            case carDir.left:
-                newDir = carDir.forward
-                break
-            case carDir.right:
-                newDir = carDir.backward
-                break
-            case carDir.stop:
-                newDir = carDir.stop
-        }
-        nexusbit.DC_car(newDir, carTurnMode.rotate, speed, speed)
-    }
-
     //% block="Stand still"
     export function robotStandstill() {
         nexusbit.servosToDefl()
@@ -923,6 +901,28 @@ namespace nexusbot {
     //% block="Detected object ?"
     export function detectedObj(): boolean {
         return nexusbit.sonarCheck(compareOpr.smaller, 10)
+    }
+
+    //% block="DC motor Car %direction speed %speed" speed.min=0 speed.max=100 speed.defl=50 direction.fieldEditor="gridpicker" advanced=true
+    export function robotCar(direction: carDir, speed: number) {
+        let newDir: carDir
+        switch (direction) {
+            case carDir.forward:
+                newDir = carDir.backward
+                break
+            case carDir.backward:
+                newDir = carDir.forward
+                break
+            case carDir.left:
+                newDir = carDir.left
+                break
+            case carDir.right:
+                newDir = carDir.right
+                break
+            case carDir.stop:
+                newDir = carDir.stop
+        }
+        nexusbit.DC_car(newDir, carTurnMode.rotate, speed, speed)
     }
 
 }
