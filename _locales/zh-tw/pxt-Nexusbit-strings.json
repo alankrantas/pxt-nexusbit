@@ -1,7 +1,7 @@
 {
   "boardType.nexusbit|block": "Nexus:bit",
-  "boardType.thunderbit_v2|block": "Thunder:bit二代",
-  "boardType.thunderbit_v1|block": "Thunder:bit一代",
+  "boardType.thunderbit_v2|block": "Thunder:bit 二代",
+  "boardType.thunderbit_v1|block": "Thunder:bit 一代",
   "botAction.l_arm_down|block": "左臂放至最低",
   "botAction.l_arm_high|block": "左臂高舉",
   "botAction.l_arm_low|block": "左臂低舉",
@@ -79,7 +79,7 @@
   "joystickSen.high|block": "高",
   "joystickSen.low|block": "低",
   "joystickSen.normal|block": "正常",
-  "nexusbit.DC_car|block": "雙直流馬達車|方向 %carDir|轉彎模式 %mode|右馬達(A, P13/14)轉速 %rightSpeed|左馬達(B, P15/16)轉速 %leftSpeed",
+  "nexusbit.DC_car|block": "雙直流馬達車|方向 %carDir|轉彎模式 %mode|右馬達 (A, P13/14) 轉速 %rightSpeed|左馬達 (B, P15/16) 轉速 %leftSpeed",
   "nexusbit.DC|block": "直流馬達 %motor 轉速 %speed",
   "nexusbit.P12_led|block": "P12 LED 亮度 %level",
   "nexusbit.P12_servo|block": "P12 伺服馬達轉至 %degree 度",
