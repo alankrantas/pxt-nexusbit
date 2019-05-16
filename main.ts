@@ -903,7 +903,7 @@ namespace nexusbot {
         return nexusbit.sonarCheck(compareOpr.smaller, 10)
     }
 
-    //% block="DC motor car %direction speed %speed" speed.min=0 speed.max=100 speed.defl=50 direction.fieldEditor="gridpicker" blockExternalInputs=true advanced=true
+    //% block="DC motor car %direction speed %speed" speed.min=0 speed.max=100 speed.defl=50 direction.fieldEditor="gridpicker" advanced=true
     export function robotCar(direction: carDir, speed: number) {
         nexusbit.DC_car(direction, carTurnMode.rotate, speed, speed)
     }
