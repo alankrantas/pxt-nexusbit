@@ -677,7 +677,16 @@ namespace nexusbot {
 
     //% block="Stand still"
     export function robotStandstill() {
+        isInAction = true
         nexusbit.servosToDefl()
+        isInAction = false
+    }
+
+    //% block="Stand still (legs and feet only)"
+    export function robotLegStandStill() {
+        isInAction = true
+        nexusbit.servosToDeltaFromDefl([0, 0, 0, 0])
+        isInAction = false
     }
 
     function _servoMove(s: number, d: number) {
@@ -854,10 +863,10 @@ namespace nexusbot {
                 break
             case botWalk.shuffle_left:
                 _servosDeltaSeq([
-                    [0, 0, -15, -50],
+                    [0, 0, -15, -40],
+                    [null, null, 40, null],
                 ])
-                _servoMove(3, 50)
-                basic.pause(300)
+                basic.pause(100)
                 _servosDeltaSeq([
                     [null, null, null, 15],
                     [null, null, 0, 0]
@@ -865,10 +874,10 @@ namespace nexusbot {
                 break
             case botWalk.shuffle_right:
                 _servosDeltaSeq([
-                    [0, 0, 50, 15],
+                    [0, 0, 40, 15],
+                    [null, null, null, 40],
                 ])
-                _servoMove(4, -50)
-                basic.pause(300)
+                basic.pause(100)
                 _servosDeltaSeq([
                     [null, null, -15, null],
                     [null, null, 0, 0]
