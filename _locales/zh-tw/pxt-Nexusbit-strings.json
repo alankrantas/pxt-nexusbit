@@ -124,6 +124,7 @@
   "nexusbot.robotCar|block": "直流馬達小車 %direction 速度 %speed",
   "nexusbot.robotSpeed|block": "伺服馬達逐次轉動速度 %speed",
   "nexusbot.robotStandstill|block": "站定",
+  "nexusbot.robotLegStandStill|block": "站定 (只有腿與腳)",
   "nexusbot.robot_walk|block": "移動方式: %action",
   "servoDir.max|block": "最大",
   "servoDir.min|block": "最小",
