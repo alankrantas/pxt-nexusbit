@@ -37,13 +37,19 @@ The onboard PCA9685 chip has the I2C address of 0x40 (64).
 
 ![IMG_0006](https://user-images.githubusercontent.com/44191076/57355358-6a155600-71a0-11e9-912c-9fcd4bfde060.JPG)
 
+This extension is also appliable to Thunder:bit V1/V2 motor boards (you'll need to select the board type), which is similar to Nexus:bit except microphone and have only 4 PCA9685 servo pins.
+
+## NexusBot
+
+NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. This extension comes with basic control blocks for this robot.
+
 ![IMG_0040](https://user-images.githubusercontent.com/44191076/57355393-7ef1e980-71a0-11e9-9b1b-28236775f7b7.JPG)
 
 Video demo: https://www.youtube.com/watch?v=aCaN0LK8dZg
 
-NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. This extension comes with basic control blocks for this robot.
+The robot can also be refitted into a small 2WD car, using 2 DC motors in servo bodies (2 cables) or continuous rotation servos (3 cables) with wheels. We use the DC motors since they are easier to control.
 
-This extension is also appliable to Thunder:bit V1/V2 motor boards (you'll need to select the board type), which is similar to Nexus:bit except microphone and have only 4 PCA9685 servo pins.
+![IMG_0066](https://user-images.githubusercontent.com/44191076/58068030-40a5f280-7bc2-11e9-94fc-807f7433d7ea.JPG)
 
 ## Relative-Degree and Gradual Servo Control
 
