@@ -875,7 +875,7 @@ namespace nexusbot {
             case botWalk.shuffle_right:
                 _servosDeltaSeq([
                     [0, 0, 40, 15],
-                    [null, null, null, 40],
+                    [null, null, null, -40],
                 ])
                 basic.pause(100)
                 _servosDeltaSeq([
