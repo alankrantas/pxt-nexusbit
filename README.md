@@ -81,19 +81,19 @@ The following code demostrates how to gradually (slowly, smoothly) turn 4 servos
 ```
 basic.forever(function () {
     nexusbit.servosSlowTurnDeltaFromDefl(
-    [nexusbit.return_null(), nexusbit.return_null(), 40, 15],
+    [null, null, 40, 15],
     0
     )
     nexusbit.servosSlowTurnDeltaFromDefl(
-    [20, 20, nexusbit.return_null(), nexusbit.return_null()],
+    [20, 20, null, null],
     0
     )
     nexusbit.servosSlowTurnDeltaFromDefl(
-    [nexusbit.return_null(), nexusbit.return_null(), -15, -40],
+    [null, null, -15, -40],
     0
     )
     nexusbit.servosSlowTurnDeltaFromDefl(
-    [-20, -20, nexusbit.return_null(), nexusbit.return_null()],
+    [-20, -20, null, null],
     0
     )
 })
@@ -105,16 +105,16 @@ It can also be used like this, using while() loops which you can stop/break out 
 
 ```
 basic.forever(function () {
-    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([nexusbit.return_null(), nexusbit.return_null(), 40, 15])) {
+    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([null, null, 40, 15])) {
     	
     }
-    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([20, 20, nexusbit.return_null(), nexusbit.return_null()])) {
+    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([20, 20, null, null])) {
     	
     }
-    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([nexusbit.return_null(), nexusbit.return_null(), -15, -40])) {
+    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([null, null, -15, -40])) {
     	
     }
-    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([-20, -20, nexusbit.return_null(), nexusbit.return_null()])) {
+    while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([-20, -20, null, null])) {
     	
     }
 })
