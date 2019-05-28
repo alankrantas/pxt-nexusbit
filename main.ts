@@ -326,7 +326,7 @@ namespace nexusbit {
         return pins.digitalReadPin(DigitalPin.P12) == 1 && _boardType == boardType.nexusbit
     }
 
-    //% block="Vibrator motor level %level duration (ms) %duration" level.min=0 level.max=1023 level.defl=512 duration.min=0 duration.defl=0 group="2. Basic"
+    //% block="Vibrator motor level %level duration (ms) %duration" level.min=0 level.max=1023 level.defl=512 duration.min=0 duration.defl=0 duration.shadow="timePicker" group="2. Basic"
     export function vibrator(level: number, duration: number) {
         if (level == 1023) pins.digitalWritePin(DigitalPin.P8, 1)
         else pins.analogWritePin(AnalogPin.P8, Math.constrain(level, 0, 1023))
