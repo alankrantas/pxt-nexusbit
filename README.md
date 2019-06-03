@@ -10,7 +10,6 @@ Nexus:bit is a powerful [BBC micro:bit](https://microbit.org/) multiple-purpose 
 
 In the [MakeCode editor](https://makecode.microbit.org/) go to Advanced -> +Extension... and enter "nexusbit" or "TCEA" into the serach box. Press enter and you'll be able to import it. (Another way is to copy/paste the extension url https://github.com/alankrantas/pxt-Nexusbit into the search box.)
 
-
 ## Product Information
 
 Check out our webpage for more information, including where to buy them:
@@ -19,7 +18,7 @@ Check out our webpage for more information, including where to buy them:
 
 [繁體中文介紹](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89)
 
-You can also contact me (alan@beyond-coding.org.tw) for order requests.
+You can also contact me (alan@beyond-coding.org.tw) for order/partership requests.
 
 ## Nexus:bit
 
@@ -198,6 +197,16 @@ basic.forever(function () {
     }
 })
 ```
+
+## Product Manual
+
+NexusBot assembly/calibration/basic control manual - English: (coming soon)
+
+[NexusBot組裝/校正/基本控制手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbot-147721934)
+
+Nexus:bit user manual - English: (coming soon)
+
+[Nexus:bit使用手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbit-for-bbc-microbit)
 
 ## Extension Author
 
