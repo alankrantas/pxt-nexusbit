@@ -46,6 +46,8 @@ NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. T
 
 Video demo: https://www.youtube.com/watch?v=aCaN0LK8dZg
 
+Video demo 2: https://www.youtube.com/watch?v=1JEVdHLj21k
+
 The robot can also be refitted into a small 2WD car, using 2 DC motors in servo bodies (2 cables) or continuous rotation servos (3 cables) with wheels. We use the DC motors since they are easier to control.
 
 ![IMG_0066](https://user-images.githubusercontent.com/44191076/58068030-40a5f280-7bc2-11e9-94fc-807f7433d7ea.JPG)
@@ -147,11 +149,13 @@ true
 )
 ```
 
-Power up the robot and all servos should be turned to default position (90 degrees for legs and feet, 0 or 180 degrees for arms and hands). Adjust each servo's installed position so that the robot stands still more or less, with both hands hug close to body (demostrated in the picture below).
+Power up the robot and all servos should be turned to default position (90 degrees for legs and feet, 0 or 180 degrees for arms and hands). Adjust each servo's installed position so that the robot stands more or less straight, with both hands hug close to body (demostrated as the picture below).
 
 ![IMG_0033](https://user-images.githubusercontent.com/44191076/57355621-00497c00-71a1-11e9-89e4-7fcddb55f2cb.JPG)
 
-Finally calibrate all servos' default position in the editor, until legs are straight, feet are flat on the ground and hands are pointed directly downward. Save the calibrated code in your computer for future use.
+Now calibrate all servos' default position (plus or minus degrees) in the MakeCode editor, until legs are straight, feet are flat on the ground and hands are pointed directly downward. Save the .hex file in your computer for future use.
+
+See the NexusBot manual for more details.
 
 ## Nexus:bit Test Code
 
