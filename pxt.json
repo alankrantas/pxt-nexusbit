@@ -10,7 +10,8 @@
     "files": [
         "README.md",
         "main.ts",
-        "_locales/zh-tw/pxt-Nexusbit-strings.json"
+        "_locales/zh-tw/pxt-Nexusbit-strings.json",
+        "_locales/zh-cn/pxt-Nexusbit-strings.json"
     ],
     "testFiles": [
         "test.ts"
