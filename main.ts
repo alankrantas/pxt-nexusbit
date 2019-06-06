@@ -246,10 +246,10 @@ namespace nexusbit {
             _gLedPin = 14
             _bLedPin = 13
         } else if (_boardType == boardType.thunderbit_v2) {
-            _servoNum = 4
-            _rLedPin = 11
+            _servoNum = 8
+            _rLedPin = 9
             _gLedPin = 10
-            _bLedPin = 9
+            _bLedPin = 11
         } else {
             _servoNum = 4
             _rLedPin = 9
