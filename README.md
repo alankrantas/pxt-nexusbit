@@ -36,7 +36,11 @@ The onboard PCA9685 chip has the I2C address of 0x40 (64).
 
 ![IMG_0006](https://user-images.githubusercontent.com/44191076/57355358-6a155600-71a0-11e9-912c-9fcd4bfde060.JPG)
 
-This extension is also appliable to Thunder:bit V1/V2 motor boards (you'll need to select the board type), which is similar to Nexus:bit except microphone and have only 4 PCA9685 servo pins.
+## Compability to Thunder:bit v2/v1
+
+This extension is also appliable to Thunder:bit v2/v1 expansion boards made by TCEA (you'll need to select the board type). Thunder:bits are similar to Nexus:bit, except they are larger (more suitable for maker projects), have no microphone and only have 8 (v2) or 4 (v1) PCA9685 servo pins. V2 version has a buzzer jumper as well.
+
+![IMG_8904](https://user-images.githubusercontent.com/44191076/59016296-84138880-8873-11e9-9a9b-7402cb7c1de9.JPG)
 
 ## NexusBot
 
@@ -204,9 +208,11 @@ basic.forever(function () {
 
 ## Product Manual
 
-NexusBot assembly/calibration/basic control manual - English: (coming soon)
+[NexusBot assembly/calibration/basic control manual - English](https://www.slideshare.net/beyond-coding/nexus-bot-assembly-manual)
 
 [NexusBot組裝/校正/基本控制手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbot-147721934)
+
+You can also check out the quick version assembly video: https://www.youtube.com/watch?v=o8t25wX5Ztw
 
 Nexus:bit user manual - English: (coming soon)
 
