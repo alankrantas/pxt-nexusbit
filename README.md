@@ -62,7 +62,7 @@ One major function of this extension is to control servos by relative degrees, o
 
 For the example below:
 
-```
+```blocks
 nexusbit.servoConfig(
 1,
 80,
@@ -83,7 +83,7 @@ The default position of Servo 1 (on PCA9685) is set to 80 degrees with min and m
 
 The following code demostrates how to gradually (slowly, smoothly) turn 4 servos of a OTTO-like biped robot (first two servos are legs, last two are feet):
 
-```
+```blocks
 basic.forever(function () {
     nexusbit.servosSlowTurnDeltaFromDefl(
     [null, null, 40, 15],
@@ -108,7 +108,7 @@ The servo turning direction may be different on different robot configurations.
 
 It can also be used like this, using while() loops which you can stop/break out whenever you want:
 
-```
+```blocks
 basic.forever(function () {
     while (nexusbit.servoSlowTurnDeltaFromDeflAndCheck([null, null, 40, 15])) {
     	
@@ -127,7 +127,7 @@ basic.forever(function () {
 
 In the NexusBot section some of the leg movements are already implemented, so you can simply coded it as
 
-```
+```blocks
 basic.forever(function () {
     nexusbot.robot_walk(botWalk.forward)
 })
@@ -139,7 +139,7 @@ It is not recommended to gradually turn more than 4 servos at once, since this w
 
 To calibrate the robot, use the calibration block in the NexusBot section without any changes and download the code onto your micro:bit.
 
-```
+```blocks
 nexusbot.robotCalibrate(
 0,
 0,
@@ -165,7 +165,7 @@ See the NexusBot manual for more details.
 
 To test Nexus:bit, connect joystick board, two DC motors and at least one servo to the expansion board, and flash the following code onto your micro:bit. Move the joystick around and press A/B to test various functions. When the mic is triggered the micro:bit would display a "yes" on its LED screen.
 
-```
+```blocks
 nexusbit.servosToDegree([90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90])
 input.onButtonPressed(Button.A, function () {
     nexusbit.servosToDegree([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
