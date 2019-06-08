@@ -20,9 +20,7 @@ Check out our webpage for more information, including where to buy them:
 
 You can also contact me (alan@beyond-coding.org.tw) for order/partership requests or questions.
 
-## Nexus:bit
-
-Features of Nexus:bit include:
+## Nexus:bit Features
 
 * an onboard rechargable 18650 lithium battery (included; 2600 mAh)
 * a miniature joystick/botton board (the slot can also be used to install a HC-SR04/HC-SR04P ultrasonic sensor)
@@ -36,23 +34,16 @@ The onboard PCA9685 chip has the I2C address of 0x40 (64).
 
 ![IMG_0006](https://user-images.githubusercontent.com/44191076/57355358-6a155600-71a0-11e9-912c-9fcd4bfde060.JPG)
 
-## Compatibility to Thunder:bit v2/v1 Boards
-
-This extension is also appliable to Thunder:bit v2/v1 expansion boards made by TCEA (you'll need to select the board type). Thunder:bits are similar to Nexus:bit, except they are larger (more suitable for maker projects), have no microphone and only have 8 (v2) or 4 (v1) PCA9685 servo pins. V2 version has a buzzer jumper as well.
-
-![IMG_8904](https://user-images.githubusercontent.com/44191076/59016296-84138880-8873-11e9-9a9b-7402cb7c1de9.JPG)
-
 ## NexusBot
 
 NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. This extension comes with basic control blocks for this robot.
 
 ![IMG_0040](https://user-images.githubusercontent.com/44191076/57355393-7ef1e980-71a0-11e9-9b1b-28236775f7b7.JPG)
 
-Video demo: https://www.youtube.com/watch?v=aCaN0LK8dZg
+* Video demo: https://www.youtube.com/watch?v=aCaN0LK8dZg
+* Video demo 2: https://www.youtube.com/watch?v=1JEVdHLj21k
 
-Video demo 2: https://www.youtube.com/watch?v=1JEVdHLj21k
-
-The robot can also be refitted into a small 2WD car, using 2 DC motors in servo bodies (2 cables) or continuous rotation servos (3 cables) with wheels. We use the DC motors since they are easier to control.
+The robot can also be refitted into a small 2WD car, using 2 DC motors in servo bodies with wheels attached. We use the DC motors since they are easier to control.
 
 ![IMG_0066](https://user-images.githubusercontent.com/44191076/58068030-40a5f280-7bc2-11e9-94fc-807f7433d7ea.JPG)
 
@@ -60,7 +51,7 @@ The robot can also be refitted into a small 2WD car, using 2 DC motors in servo 
 
 One major function of this extension is to control servos by relative degrees, or vectors from their default position. This allows users to define and repeat more precise servo movements after simple calibrations. The extension also constrains servos' target position to be within 0-180 degrees, or whatever range the user defined.
 
-For the example below:
+Example:
 
 ```blocks
 nexusbit.servoConfig(
@@ -125,7 +116,7 @@ basic.forever(function () {
 })
 ```
 
-In the NexusBot section some of the leg movements are already implemented, so you can simply coded it as
+In the NexusBot section some of the leg movements are already implemented, so you can simply use
 
 ```blocks
 basic.forever(function () {
@@ -133,11 +124,11 @@ basic.forever(function () {
 })
 ```
 
-It is not recommended to gradually turn more than 4 servos at once, since this would slow down all servos' turning speed and make the movement less usable.
+It is not recommended to gradually turn more than 4 servos at the same time, since this would slow down all servos' turning speed.
 
 ## Calibrate NexutBot
 
-To calibrate the robot, use the calibration block in the NexusBot section without any changes and download the code onto your micro:bit.
+To calibrate the robot, use the calibration block in the NexusBot section without any changes and flash the code onto your micro:bit.
 
 ```blocks
 nexusbot.robotCalibrate(
@@ -212,17 +203,27 @@ basic.forever(function () {
 
 [NexusBot組裝/校正/基本控制手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbot-147721934)
 
-You can also check out the quick version assembly video: https://www.youtube.com/watch?v=o8t25wX5Ztw
-
 Nexus:bit user manual - English: (coming soon)
 
 [Nexus:bit使用手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbit-for-bbc-microbit)
+
+You can also check out the quick version assembly video: https://www.youtube.com/watch?v=o8t25wX5Ztw
 
 ## Extension Author
 
 Alan Wang, micro:bit Education Material Developer of Taiwan Coding Education Association
 
 Email: alan@beyond-coding.org.tw
+
+## Extension Translation
+
+English (default), Traditional Chinese and Simplified Chinese
+
+## Extension Compatibility to Thunder:bit V2/V1 Boards
+
+This extension is also appliable to Thunder:bit V2/V1 expansion boards made by TCEA (you'll need to select the board type). Thunder:bits are similar to Nexus:bit, except they are larger (more suitable for maker projects), have no microphone and only have 8 (V2) or 4 (V1) PCA9685 servo pins. V2 version has a buzzer jumper as well.
+
+![IMG_8904](https://user-images.githubusercontent.com/44191076/59016296-84138880-8873-11e9-9a9b-7402cb7c1de9.JPG)
 
 ## License
 
