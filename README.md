@@ -18,7 +18,7 @@ Check out our webpage for more information, including where to buy them:
 
 [繁體中文介紹](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89)
 
-You can also contact me (alan@beyond-coding.org.tw) for order/partership requests.
+You can also contact me (alan@beyond-coding.org.tw) for order/partership requests or questions.
 
 ## Nexus:bit
 
@@ -36,7 +36,7 @@ The onboard PCA9685 chip has the I2C address of 0x40 (64).
 
 ![IMG_0006](https://user-images.githubusercontent.com/44191076/57355358-6a155600-71a0-11e9-912c-9fcd4bfde060.JPG)
 
-## Compability to Thunder:bit v2/v1
+## Compatibility to Thunder:bit v2/v1 Boards
 
 This extension is also appliable to Thunder:bit v2/v1 expansion boards made by TCEA (you'll need to select the board type). Thunder:bits are similar to Nexus:bit, except they are larger (more suitable for maker projects), have no microphone and only have 8 (v2) or 4 (v1) PCA9685 servo pins. V2 version has a buzzer jumper as well.
 
@@ -163,7 +163,7 @@ See the NexusBot manual for more details.
 
 ## Nexus:bit Test Code
 
-To test Nexus:bit, connect joystick board, two DC motors and at least one servo to the expansion board, and flash the following code onto your micro:bit. Move the joystick around and press A/B to test various functions. When the mic is triggered the micro:bit would display a "yes" on its LED screen.
+To test Nexus:bit, connect joystick board, two DC motors and at least one servo to the expansion board, and flash the following code onto your micro:bit. Move the joystick around and press A/B to test various functions. When the mic is triggered the micro:bit would display a "yes" icon on its LED screen.
 
 ```blocks
 nexusbit.servosToDegree([90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90])
