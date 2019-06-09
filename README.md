@@ -18,7 +18,7 @@ Check out our webpage for more information, including where to buy them:
 
 [繁體中文介紹](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89)
 
-You can also contact me (alan@beyond-coding.org.tw) for order/partership requests or questions.
+You can purchase the NexusBot kit ([blue](https://goods.ruten.com.tw/item/show?21920455813268) or [pink](https://goods.ruten.com.tw/item/show?21922553023352), with micro:bit/battery/servo and dc motors included) in our [local online shop](https://class.ruten.com.tw/user/index00.php?s=ittraining). Currently we don't have international shop pages or resellers yet. You can contact me (alan@beyond-coding.org.tw) for order/partership questions or requests; I'll forward it to my collegues.
 
 ## Nexus:bit Features
 
