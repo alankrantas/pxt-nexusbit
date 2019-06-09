@@ -1,5 +1,5 @@
 /**
-* MakeCode extension For micro:bit expansion board "Nexus:bit" and Robot "NexusBot" from Taiwan Coding Education Association (TCEA)
+* MakeCode extension for micro:bit expansion board "Nexus:bit" and robot "NexusBot" from Taiwan Coding Education Association (TCEA)
 * By Alan Wang, 2019
 */
 
@@ -96,9 +96,9 @@ enum carDir {
 
 enum carTurnMode {
     //% block="normal"
-    normal = 0,
+    normal,
     //% block="rotate"
-    rotate = 1,
+    rotate,
 }
 
 enum steMotorDir {
@@ -223,6 +223,7 @@ namespace nexusbit {
     let _rLedPin = 15
     let _gLedPin = 14
     let _bLedPin = 13
+    let _boardName = "Nexus:bit"
     let _initialized = false
     let _servoDefl = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90]
     let _servoCurrent = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90]
@@ -241,17 +242,15 @@ namespace nexusbit {
     export function selectBoard(type: boardType) {
         _boardType = type
         if (_boardType == boardType.nexusbit) {
+            _boardName = "Nexus:bit"
             _servoNum = 12
             _rLedPin = 15
             _gLedPin = 14
             _bLedPin = 13
-        } else if (_boardType == boardType.thunderbit_v2) {
-            _servoNum = 8
-            _rLedPin = 9
-            _gLedPin = 10
-            _bLedPin = 11
         } else {
-            _servoNum = 4
+            _boardName = "Thunder:bit "
+            _boardName += (_boardType == boardType.thunderbit_v2) ? "V2" : "V1"
+            _servoNum = (_boardType == boardType.thunderbit_v2) ? 8 : 4
             _rLedPin = 9
             _gLedPin = 10
             _bLedPin = 11
@@ -260,10 +259,10 @@ namespace nexusbit {
 
     //% block="Board information (see serial output)" group="1. Setup" advanced=true
     export function info() {
-        serial.writeLine("Nexus:bit and NexusBot are products by Taiwan Coding Education Association (TCEA)")
-        serial.writeLine("https://www.beyond-coding.org.tw/")
-        serial.writeLine("Extension by Alan Wang, 2019. Check out more details in the following link:")
-        serial.writeLine("https://github.com/alankrantas/pxt-Nexusbit")
+        serial.writeLine("Nexus:bit/Thunder:bit/NexusBot are products of Taiwan Coding Education Association (TCEA) (www.beyond-coding.org.tw)")
+        serial.writeLine("Extension by Alan Wang, 2019. (github.com/alankrantas/pxt-Nexusbit)")
+        serial.writeLine("Current selected board: " + _boardName)
+        serial.writeLine("PCA9685 servo num: " + _servoNum)
     }
 
     //% block="Joystick direction %direction ?" group="2. Basic"
@@ -293,8 +292,7 @@ namespace nexusbit {
 
     //% block="Joystick axis %axis analog reading" group="2. Basic" advanced=true
     export function joystickReading(axis: joystickAxis): number {
-        if (axis == joystickAxis.x) return pins.analogReadPin(AnalogPin.P1)
-        else return pins.analogReadPin(AnalogPin.P2)
+        return axis == joystickAxis.x ? pins.analogReadPin(AnalogPin.P1) : pins.analogReadPin(AnalogPin.P2)
     }
 
     //% block="Ultrasonic distance (cm)" group="2. Basic" advanced=true
@@ -307,8 +305,7 @@ namespace nexusbit {
         let d = sonarDistance()
         if (d > 0) {
             d = Math.constrain(d, 1, 200)
-            if (compare == compareOpr.smaller) return d < distance
-            else return d > distance
+            return compare == compareOpr.smaller ? d < distance : d > distance
         } else {
             return false
         }
@@ -388,8 +385,7 @@ namespace nexusbit {
     export function servoConfig(servo: number, deflDegree: number, minDegree: number, maxDegree: number, delta: number) {
         if (servo > 0 && servo <= _servoNum) {
             _servoMin[servo - 1] = Math.constrain(minDegree, 0, 180)
-            if (Math.constrain(maxDegree, 0, 180) >= minDegree) _servoMax[servo - 1] = Math.constrain(maxDegree, 0, 180)
-            else _servoMax[servo - 1] = _servoMin[servo - 1]
+            _servoMax[servo - 1] = (Math.constrain(maxDegree, 0, 180) >= minDegree) ? Math.constrain(maxDegree, 0, 180) : _servoMin[servo - 1]
             _servoDefl[servo - 1] = Math.constrain(deflDegree, _servoMin[servo - 1], _servoMax[servo - 1])
             _servoDelta[servo - 1] = Math.constrain(delta, 0, 180)
         }
@@ -419,14 +415,12 @@ namespace nexusbit {
 
     //% block="Get PCA9685 servo no. %servo current position" servo.min=1 servo.max=12 servo.defl=1 deltaArray.min=0 deltaArray.max=180 deltaArray.defl=5 group="4. PCA9685 Servos" advanced=true
     export function getServoCurrent(servo: number): number {
-        if (servo > 0 && servo <= _servoNum) return _servoCurrent[servo - 1]
-        else return 0
+        return (servo > 0 && servo <= _servoNum) ? _servoCurrent[servo - 1] : 0
     }
 
     //% block="PCA9685 servo no. %servo turn to %direction degree(s)" servo.min=1 servo.max=12 servo.defl=1 group="4. PCA9685 Servos"
     export function servoToMinMax(servo: number, direction: servoDir) {
-        if (direction == servoDir.min) servoTo(servo, _servoMin[servo - 1])
-        else servoTo(servo, _servoMax[servo - 1])
+        servoTo(servo, direction == servoDir.min ? _servoMin[servo - 1] : _servoMax[servo - 1])
     }
 
     //% block="PCA9685 servo no. %servo move %delta degree(s) from default" servo.min=1 servo.max=12 servo.defl=1 delta.min=-180 delta.max=180 delta.defl=0 group="4. PCA9685 Servos"
@@ -449,22 +443,18 @@ namespace nexusbit {
 
     //% block="PCA9685 servo no. %servo at %degree degree(s) %check ?" servo.min=1 servo.max=12 servo.defl=1 degree.shadow="protractorPicker" degree.defl=90 group="4. PCA9685 Servos" advanced=true
     export function ServoIsAtDegree(servo: number, degree: number, check: boolean) {
-        if (servo > 0 && servo <= _servoNum) return check == true ? getServoCurrent(servo) == degree : !(getServoCurrent(servo) == degree)
+        if (servo > 0 && servo <= _servoNum) return check ? getServoCurrent(servo) == degree : !(getServoCurrent(servo) == degree)
         else return false
     }
 
     //% block="PCA9685 servo no. %servo gradually turn toward %direction degree(s)" servo.min=1 servo.max=12 servo.defl=1 group="4. PCA9685 Servos" advanced=true
     export function servoSlowTurnMinMax(servo: number, direction: servoDir) {
-        if (direction == servoDir.min)
-            servoSlowTurn(servo, _servoMin[servo - 1])
-        else if (direction == servoDir.max)
-            servoSlowTurn(servo, _servoMax[servo - 1])
+        servoSlowTurn(servo, direction == servoDir.min ? _servoMin[servo - 1] : _servoMax[servo - 1])
     }
 
     //% block="PCA9685 servo no. %servo at %direction degree(s) %check ?" servo.min=1 servo.max=12 servo.defl=1 group="4. PCA9685 Servos" advanced=true
     export function ServoIsAtMinMax(servo: number, direction: servoDir, check: boolean) {
-        if (direction == servoDir.min) return ServoIsAtDegree(servo, _servoMin[servo - 1], check)
-        else return ServoIsAtDegree(servo, _servoMax[servo - 1], check)
+        return ServoIsAtDegree(servo, direction == servoDir.min ? _servoMin[servo - 1] : _servoMax[servo - 1], check)
     }
 
     //% block="PCA9685 servo no. %servo gradually move %delta degree(s) from default" servo.min=1 servo.max=12 servo.defl=1 delta.min=-180 delta.max=180 delta.defl=0 group="4. PCA9685 Servos" advanced=true
@@ -549,30 +539,28 @@ namespace nexusbit {
 
     //% block="DC motor %motor speed %speed" speed.shadow="speedPicker" speed.defl=100 group="5. DC/Stepper Motors"
     export function DC(motor: dcMotor, speed: number) {
-        let dPin1: DigitalPin = DigitalPin.P0
-        let dPin2: DigitalPin = DigitalPin.P0
-        let aPin1: AnalogPin = AnalogPin.P0
-        let aPin2: AnalogPin = AnalogPin.P0
-        let fullSpeed = Math.abs(speed) == 100
+        let dPin1: DigitalPin
+        let dPin2: DigitalPin
+        let aPin1: AnalogPin
+        let aPin2: AnalogPin
+        let fullSpeed = (Math.abs(speed) == 100)
         if (motor == dcMotor.P13_14) {
             dPin1 = DigitalPin.P13
             dPin2 = DigitalPin.P14
             aPin1 = AnalogPin.P13
             aPin2 = AnalogPin.P14
-        } else if (motor == dcMotor.P15_16) {
+        } else {
             dPin1 = DigitalPin.P15
             dPin2 = DigitalPin.P16
             aPin1 = AnalogPin.P15
             aPin2 = AnalogPin.P16
         }
         if (speed > 0) {
-            if (fullSpeed) pins.digitalWritePin(dPin1, 1)
-            else pins.analogWritePin(aPin1, 1023 * speed / 100)
+            pins.digitalWritePin(dPin1, fullSpeed ? 1 : 1023 * speed / 100)
             pins.digitalWritePin(dPin2, 0)
         } else if (speed < 0) {
-            if (fullSpeed) pins.digitalWritePin(dPin2, 1)
-            else pins.analogWritePin(aPin2, 1023 * Math.abs(speed) / 100)
             pins.digitalWritePin(dPin1, 0)
+            pins.digitalWritePin(dPin2, fullSpeed ? 1 : 1023 * speed / 100)
         } else {
             pins.digitalWritePin(dPin1, 0)
             pins.digitalWritePin(dPin2, 0)
@@ -592,13 +580,11 @@ namespace nexusbit {
                 break
             case carDir.left:
                 DC(dcMotor.P13_14, rightSpeed)
-                if (mode == carTurnMode.normal) DC(dcMotor.P15_16, 0)
-                else DC(dcMotor.P15_16, leftSpeed * -1)
+                DC(dcMotor.P15_16, (mode == carTurnMode.normal) ? 0 : leftSpeed * -1)
                 break
             case carDir.right:
+                DC(dcMotor.P13_14, (mode == carTurnMode.normal) ? 0 : leftSpeed * -1)
                 DC(dcMotor.P15_16, leftSpeed)
-                if (mode == carTurnMode.normal) DC(dcMotor.P13_14, 0)
-                else DC(dcMotor.P13_14, rightSpeed * -1)
                 break
             case carDir.stop:
                 DC(dcMotor.P15_16, 0)
@@ -614,8 +600,8 @@ namespace nexusbit {
             for (let j = 0; j < 4; j++) {
                 let index = -1
                 if (direction == steMotorDir.one) index = j
-                else index = 3 - j
-                if (i == j) pins.digitalWritePin(pins_array[index], 1)
+                else if (direction == steMotorDir.two) index = 3 - j
+                if (i == j && index >= 0) pins.digitalWritePin(pins_array[index], 1)
                 else pins.digitalWritePin(pins_array[index], 0)
             }
             control.waitMicros(delay)
@@ -633,12 +619,12 @@ namespace nexusbit {
                 let index_1 = -1
                 let index_2 = -1
                 if (direction_1 == steMotorDir.one) index_1 = j
-                else index_1 = 3 - j
+                else if (direction_1 == steMotorDir.two) index_1 = 3 - j
                 if (direction_2 == steMotorDir.one) index_2 = j
-                else index_2 = 3 - j
+                else if (direction_2 == steMotorDir.two) index_2 = 3 - j
                 if (i == j) {
-                    pins.digitalWritePin(pins_array_1[index_1], 1)
-                    pins.digitalWritePin(pins_array_2[index_2], 1)
+                    if (index_1 >= 0) pins.digitalWritePin(pins_array_1[index_1], 1)
+                    if (index_2 >= 0) pins.digitalWritePin(pins_array_2[index_2], 1)
                 } else {
                     pins.digitalWritePin(pins_array_1[index_1], 0)
                     pins.digitalWritePin(pins_array_2[index_2], 0)
@@ -657,7 +643,7 @@ namespace nexusbot {
 
     //% block="Servos calibration|(degrees from default:)|Left leg (servo 1) %servo1|Right leg (servo 2) %servo2|Left foot (servo 3) %servo3|Right foot (servo 4) %servo4|Left arm (servo 5) %servo5|Right arm (servo 6) %servo6|Left hand (servo 7) %servo7|Right hand (servo 8) %servo8|then stand still %stand_still" servo1.min=-180 servo1.max=180 servo1.defl=0 servo2.min=-180 servo2.max=180 servo2.defl=0 servo3.min=-180 servo3.max=180 servo3.defl=0 servo4.min=-180 servo4.max=180 servo4.defl=0 servo5.min=-180 servo5.max=180 servo5.defl=0 servo6.min=-180 servo6.max=180 servo6.defl=0 servo7.min=-180 servo7.max=180 servo7.defl=0 servo8.min=-180 servo8.max=180 servo8.defl=0 stand_still.defl=true
     export function robotCalibrate(servo1: number, servo2: number, servo3: number, servo4: number, servo5: number, servo6: number, servo7: number, servo8: number, stand_still: boolean) {
-        if (_boardType == boardType.nexusbit)
+        if (_boardType != boardType.thunderbit_v1)
             nexusbit.servosDeflAdjust([servo1, servo2, servo3, servo4, servo5 + 90, servo6 - 90, servo7 - 90, servo8 + 90])
         else
             nexusbit.servosDeflAdjust([servo1, servo2, servo3, servo4])
@@ -669,7 +655,7 @@ namespace nexusbot {
 
     //% block="Servos gradual turn speed %speed" speed.min=1 speed.max=10 speed.defl=5 advanced=true
     export function robotSpeed(speed: number) {
-        if (_boardType == boardType.nexusbit)
+        if (_boardType != boardType.thunderbit_v1)
             nexusbit.servoSetDelta([speed, speed, speed, speed, speed, speed, speed, speed])
         else
             nexusbit.servoSetDelta([speed, speed, speed, speed])
