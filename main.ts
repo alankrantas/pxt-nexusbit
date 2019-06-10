@@ -895,7 +895,7 @@ namespace nexusbot {
 
     //% block="Detected object ?"
     export function detectedObj(): boolean {
-        return nexusbit.sonarCheck(compareOpr.smaller, 10)
+        return nexusbit.sonarCheck(compareOpr.smaller, 15)
     }
 
     //% block="DC motor car %direction speed %speed" speed.min=0 speed.max=100 speed.defl=50 direction.fieldEditor="gridpicker" advanced=true
