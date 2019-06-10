@@ -562,7 +562,7 @@ namespace nexusbit {
         } else if (speed < 0) {
             pins.digitalWritePin(dPin1, 0)
             if (fullSpeed) pins.digitalWritePin(dPin2, 1)
-            else pins.analogWritePin(aPin2, 1023 * speed / 100)
+            else pins.analogWritePin(aPin2, 1023 * (speed * -1) / 100)
         } else {
             pins.digitalWritePin(dPin1, 0)
             pins.digitalWritePin(dPin2, 0)
@@ -582,10 +582,10 @@ namespace nexusbit {
                 break
             case carDir.left:
                 DC(dcMotor.P13_14, rightSpeed)
-                DC(dcMotor.P15_16, (mode == carTurnMode.normal) ? 0 : leftSpeed * -1)
+                DC(dcMotor.P15_16, (mode == carTurnMode.rotate) ? leftSpeed * -1 : 0)
                 break
             case carDir.right:
-                DC(dcMotor.P13_14, (mode == carTurnMode.normal) ? 0 : leftSpeed * -1)
+                DC(dcMotor.P13_14, (mode == carTurnMode.rotate) ? rightSpeed * -1 : 0)
                 DC(dcMotor.P15_16, leftSpeed)
                 break
             case carDir.stop:
