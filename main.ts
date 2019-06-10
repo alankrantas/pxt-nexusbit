@@ -573,12 +573,12 @@ namespace nexusbit {
     export function DC_car(direction: carDir, mode: carTurnMode, rightSpeed: number, leftSpeed: number) {
         switch (direction) {
             case carDir.forward:
-                DC(dcMotor.P15_16, leftSpeed)
                 DC(dcMotor.P13_14, rightSpeed)
+                DC(dcMotor.P15_16, leftSpeed)
                 break
             case carDir.backward:
-                DC(dcMotor.P15_16, leftSpeed * -1)
                 DC(dcMotor.P13_14, rightSpeed * -1)
+                DC(dcMotor.P15_16, leftSpeed * -1)
                 break
             case carDir.left:
                 DC(dcMotor.P13_14, rightSpeed)
@@ -589,8 +589,8 @@ namespace nexusbit {
                 DC(dcMotor.P15_16, leftSpeed)
                 break
             case carDir.stop:
-                DC(dcMotor.P15_16, 0)
                 DC(dcMotor.P13_14, 0)
+                DC(dcMotor.P15_16, 0)
         }
     }
 
