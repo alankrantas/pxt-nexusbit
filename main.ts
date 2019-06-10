@@ -556,11 +556,13 @@ namespace nexusbit {
             aPin2 = AnalogPin.P16
         }
         if (speed > 0) {
-            pins.digitalWritePin(dPin1, fullSpeed ? 1 : 1023 * speed / 100)
+            if (fullSpeed) pins.digitalWritePin(dPin1, 1)
+            else pins.analogWritePin(aPin1, 1023 * speed / 100)
             pins.digitalWritePin(dPin2, 0)
         } else if (speed < 0) {
             pins.digitalWritePin(dPin1, 0)
-            pins.digitalWritePin(dPin2, fullSpeed ? 1 : 1023 * speed / 100)
+            if (fullSpeed) pins.digitalWritePin(dPin2, 1)
+            else pins.analogWritePin(aPin2, 1023 * speed / 100)
         } else {
             pins.digitalWritePin(dPin1, 0)
             pins.digitalWritePin(dPin2, 0)
