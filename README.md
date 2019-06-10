@@ -203,11 +203,11 @@ basic.forever(function () {
 
 [NexusBot組裝/校正/基本控制手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbot-147721934)
 
-Nexus:bit user manual - English: (coming soon)
+[Nexus:bit user manual - English](https://www.slideshare.net/beyond-coding/nexusbit-user-manual-v01-english)
 
 [Nexus:bit使用手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbit-for-bbc-microbit)
 
-You can also check out the quick version assembly video: https://www.youtube.com/watch?v=o8t25wX5Ztw
+You can also check out the quick version NexusBot assembly video: https://www.youtube.com/watch?v=o8t25wX5Ztw
 
 ## Extension Author
 
