@@ -120,7 +120,7 @@
   "nexusbot.detectedObj|block": "侦测到物体 ?",
   "nexusbot.heardSound|block": "听见声音 ?",
   "nexusbot.robotAction|block": "动作: %action",
-  "nexusbot.robotCalibrate|block": "舵机校正|(自默认位置的变量:)|左腿 (马达1) %servo1|右腿 (马达2) %servo2|左脚 (马达3) %servo3|右脚 (马达4) %servo4|左臂 (马达5) %servo5|右臂 (马达6) %servo6|左手 (马达7) %servo7|右手 (马达8) %servo8|校正后站定 %stand_still",
+  "nexusbot.robotCalibrate|block": "舵机校正|(自默认位置的变量:)|左腿 (舵机1) %servo1|右腿 (舵机2) %servo2|左脚 (舵机3) %servo3|右脚 (舵机4) %servo4|左臂 (舵机5) %servo5|右臂 (舵机6) %servo6|左手 (舵机7) %servo7|右手 (舵机8) %servo8|校正后站定 %stand_still",
   "nexusbot.robotCar|block": "直流马达小车 %direction 速度 %speed",
   "nexusbot.robotSpeed|block": "舵机逐次转动速度 %speed",
   "nexusbot.robotStandstill|block": "站定",
