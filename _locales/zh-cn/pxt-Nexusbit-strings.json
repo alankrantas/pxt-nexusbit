@@ -79,8 +79,8 @@
   "joystickSen.high|block": "高",
   "joystickSen.low|block": "低",
   "joystickSen.normal|block": "正常",
-  "nexusbit.DC_car|block": "双直流马达车|方向 %carDir|转弯模式 %mode|右马达 (A, P13/14) 转速 %rightSpeed|左马达 (B, P15/16) 转速 %leftSpeed",
-  "nexusbit.DC|block": "直流马达 %motor 转速 %speed",
+  "nexusbit.DC_car|block": "双直流电机车|方向 %carDir|转弯模式 %mode|右电机 (A, P13/14) 转速 %rightSpeed|左电机 (B, P15/16) 转速 %leftSpeed",
+  "nexusbit.DC|block": "直流电机 %motor 转速 %speed",
   "nexusbit.P12_led|block": "P12 LED 亮度 %level",
   "nexusbit.P12_servo|block": "P12 舵机转至 %degree 度",
   "nexusbit.ServoIsAtDegree|block": "PCA9685 舵机编号 %servo 已转至 %degree 度 %check ?",
@@ -121,7 +121,7 @@
   "nexusbot.heardSound|block": "听见声音 ?",
   "nexusbot.robotAction|block": "动作: %action",
   "nexusbot.robotCalibrate|block": "舵机校正|(自默认位置的变量:)|左腿 (舵机1) %servo1|右腿 (舵机2) %servo2|左脚 (舵机3) %servo3|右脚 (舵机4) %servo4|左臂 (舵机5) %servo5|右臂 (舵机6) %servo6|左手 (舵机7) %servo7|右手 (舵机8) %servo8|校正后站定 %stand_still",
-  "nexusbot.robotCar|block": "直流马达小车 %direction 速度 %speed",
+  "nexusbot.robotCar|block": "直流电机小车 %direction 速度 %speed",
   "nexusbot.robotSpeed|block": "舵机逐次转动速度 %speed",
   "nexusbot.robotStandstill|block": "站定",
   "nexusbot.robotLegStandStill|block": "站定 (只有腿与脚)",
@@ -137,5 +137,5 @@
   "{id:group}2. Basic": "2. 基本功能",
   "{id:group}3. PCA9685 RGB LED": "3. PCA9685 彩色 LED",
   "{id:group}4. PCA9685 Servos": "4. PCA9685 舵机",
-  "{id:group}5. DC/Stepper Motors": "5. 直流/步进马达"
+  "{id:group}5. DC/Stepper Motors": "5. 直流/步进电机"
 }
