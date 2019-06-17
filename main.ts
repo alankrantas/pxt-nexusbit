@@ -265,7 +265,7 @@ namespace nexusbit {
         serial.writeLine("PCA9685 servo num: " + _servoNum)
     }
 
-    //% block="Joystick direction %direction ?" group="2. Basic"
+    //% block="Joystick direction %direction ?" direction.fieldEditor="gridpicker" group="2. Basic"
     export function joystickToDir(direction: joystickDir): boolean {
         switch (direction) {
             case joystickDir.forward:
