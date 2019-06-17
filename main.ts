@@ -655,7 +655,7 @@ namespace nexusbot {
         }
     }
 
-    //% block="Servos gradual turn speed %speed" speed.min=1 speed.max=10 speed.defl=5 advanced=true
+    //% block="Servos gradual turn speed %speed" speed.min=1 speed.max=15 speed.defl=5 advanced=true
     export function robotSpeed(speed: number) {
         if (_boardType != boardType.thunderbit_v1)
             nexusbit.servoSetDelta([speed, speed, speed, speed, speed, speed, speed, speed])
