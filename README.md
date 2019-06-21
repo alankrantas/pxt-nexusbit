@@ -1,6 +1,6 @@
 # MakeCode Editor Extension for Nexus:bit and NexusBot
 
-![logo](https://user-images.githubusercontent.com/44191076/57426674-c0db6800-7252-11e9-8a10-e25298072f5b.jpg)
+![nexusbit_logo](https://user-images.githubusercontent.com/44191076/59891098-619e7500-9406-11e9-9db7-341ab2c9057c.jpg)
 
 ![IMG_0035](https://user-images.githubusercontent.com/44191076/57355314-5538c280-71a0-11e9-8560-fbc70efd9578.JPG)
 
@@ -8,17 +8,25 @@ Nexus:bit is a powerful [BBC micro:bit](https://microbit.org/) multiple-purpose 
 
 ## Import Extension
 
-In the [MakeCode editor](https://makecode.microbit.org/) go to Advanced -> +Extension... and enter "nexusbit" or "TCEA" into the serach box. Press enter and you'll be able to import it. (Another way is to copy/paste the extension url https://github.com/alankrantas/pxt-Nexusbit into the search box.)
+In the [MakeCode editor](https://makecode.microbit.org/) go to Advanced -> +Extension... and enter "nexusbit", "nexusbot or "TCEA" into the serach box. Press enter and you'll be able to import it. (Depending on Internet status you might need to wait for a bit. Another way is to copy/paste the extension url https://github.com/alankrantas/pxt-Nexusbit into the search box.)
 
-## Product Information
+## Product Information and Manual
 
-Check out our webpage for more information, including where to buy them:
+Check out our webpage for more information:
 
 [English version](https://www.beyond-coding.org.tw/component/sppagebuilder/?view=page&id=91)
 
 [繁體中文介紹](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89)
 
-You can purchase the NexusBot kit ([blue](https://goods.ruten.com.tw/item/show?21920455813268) or [pink](https://goods.ruten.com.tw/item/show?21922553023352), with micro:bit/battery/servo and dc motors included) in our [local online shop](https://class.ruten.com.tw/user/index00.php?s=ittraining). Currently we don't have international shop pages or resellers yet. You can contact me (alan@beyond-coding.org.tw) for order/partership questions or requests; I'll forward it to my collegues.
+[NexusBot assembly/calibration/basic control manual - English](https://www.slideshare.net/beyond-coding/nexus-bot-assembly-manual)
+
+[NexusBot組裝/校正/基本控制手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbot-147721934)
+
+[Nexus:bit user manual - English](https://www.slideshare.net/beyond-coding/nexusbit-user-manual-v01-english)
+
+[Nexus:bit使用手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbit-for-bbc-microbit)
+
+You can also check out the quick version NexusBot assembly video: https://www.youtube.com/watch?v=o8t25wX5Ztw
 
 ## Nexus:bit Features
 
@@ -36,7 +44,7 @@ The onboard PCA9685 chip has the I2C address of 0x40 (64).
 
 ## NexusBot
 
-NexusBot is an OTTO-like 8-dof biped robot powered by micro:bit and Nexus:bit. This extension comes with basic control blocks for this robot.
+NexusBot is an Otto-like 8-dof biped robot powered by micro:bit and Nexus:bit. This extension comes with basic control blocks for this robot.
 
 ![IMG_0040](https://user-images.githubusercontent.com/44191076/57355393-7ef1e980-71a0-11e9-9b1b-28236775f7b7.JPG)
 
@@ -126,7 +134,7 @@ basic.forever(function () {
 
 It is not recommended to gradually turn more than 4 servos at the same time, since this would slow down all servos' turning speed.
 
-## Calibrate NexutBot
+## Calibrating NexutBot
 
 To calibrate the robot, use the calibration block in the NexusBot section without any changes and flash the code onto your micro:bit.
 
@@ -138,23 +146,19 @@ nexusbot.robotCalibrate(
 0,
 0,
 0,
-0,
-0,
+15,
+-15,
 true
 )
 ```
 
-Power up the robot and all servos should be turned to default position (90 degrees for legs and feet, 0 or 180 degrees for arms and hands). Adjust each servo's installed position so that the robot stands more or less straight, with both hands hug close to body (demostrated as the picture below).
-
-![IMG_0033](https://user-images.githubusercontent.com/44191076/57355621-00497c00-71a1-11e9-89e4-7fcddb55f2cb.JPG)
+Power up the robot and all servos should be turned to default position (90 degrees for legs and feet, 0 or 180 degrees for arms and hands). Adjust each servo's installed position so that the robot stands more or less straight, with both hands pointing to the ground.
 
 Now calibrate all servos' default position (plus or minus degrees) in the MakeCode editor, until legs are straight, feet are flat on the ground and hands are pointed directly downward. Save the .hex file in your computer for future use.
 
-See the NexusBot manual for more details.
+See the NexusBot assembly manual for more details.
 
 ## Nexus:bit Test Code
-
-To test Nexus:bit, connect joystick board, two DC motors and at least one servo to the expansion board, and flash the following code onto your micro:bit. Move the joystick around and press A/B to test various functions. When the mic is triggered the micro:bit would display a "yes" icon on its LED screen.
 
 ```blocks
 nexusbit.servosToDegree([90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90])
@@ -197,29 +201,19 @@ basic.forever(function () {
 })
 ```
 
-## Product Manual
-
-[NexusBot assembly/calibration/basic control manual - English](https://www.slideshare.net/beyond-coding/nexus-bot-assembly-manual)
-
-[NexusBot組裝/校正/基本控制手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbot-147721934)
-
-[Nexus:bit user manual - English](https://www.slideshare.net/beyond-coding/nexusbit-user-manual-v01-english)
-
-[Nexus:bit使用手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbit-for-bbc-microbit)
-
-You can also check out the quick version NexusBot assembly video: https://www.youtube.com/watch?v=o8t25wX5Ztw
-
 ## Extension Author
 
-Alan Wang, micro:bit Education Material Developer of Taiwan Coding Education Association
+Alan Wang of Taiwan Coding Education Association
 
 Email: alan@beyond-coding.org.tw
 
-## Extension Translation
+## Supported Extension Language
 
-English (default), Traditional Chinese and Simplified Chinese
+* English (default)
+* Traditional Chinese
+* Simplified Chinese
 
-## Extension Compatibility to Thunder:bit V2/V1 Boards
+## Extension Compatibility for Thunder:bit V2/V1 Boards
 
 This extension is also appliable to Thunder:bit V2/V1 expansion boards made by TCEA (you'll need to select the board type). Thunder:bits are similar to Nexus:bit, except they are larger (more suitable for maker projects), have no microphone and only have 8 (V2) or 4 (V1) PCA9685 servo pins. V2 version has a buzzer jumper as well.
 
@@ -233,4 +227,3 @@ MIT
 
 * for PXT/microbit
 (The metadata above is needed for package search.)
-
