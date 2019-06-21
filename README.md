@@ -14,9 +14,9 @@ In the [MakeCode editor](https://makecode.microbit.org/) go to Advanced -> +Exte
 
 Check out our webpage for more information:
 
-[English version](https://www.beyond-coding.org.tw/component/sppagebuilder/?view=page&id=91)
+[Product information - English](https://www.beyond-coding.org.tw/component/sppagebuilder/?view=page&id=91)
 
-[繁體中文介紹](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89)
+[產品介紹 - 繁體中文](https://www.beyond-coding.org.tw/index.php?option=com_sppagebuilder&view=page&id=89)
 
 [NexusBot assembly/calibration/basic control manual - English](https://www.slideshare.net/beyond-coding/nexus-bot-assembly-manual)
 
@@ -80,7 +80,7 @@ basic.forever(function () {
 
 The default position of Servo 1 (on PCA9685) is set to 80 degrees with min and max degrees as 30 and 150. In the loop the servo would be turned to -60 (20) and +60 (140) degrees from its default position. However, due to the min constraint of 30 the servo would only be allowed to turn to 30 degrees.
 
-The following code demostrates how to gradually (slowly, smoothly) turn 4 servos of a OTTO-like biped robot (first two servos are legs, last two are feet):
+The following code demostrates how to gradually (slowly, smoothly) turn 4 servos of a Otto-like biped robot (first two servos are legs, last two are feet):
 
 ```blocks
 basic.forever(function () {
