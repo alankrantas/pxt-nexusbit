@@ -594,10 +594,10 @@ namespace nexusbit {
         }
     }
 
-    //% block="Stepper motor 1 step|(with ULN2003 driver board)|IN1 = %pin1 IN2 = %pin2 IN3 = %pin3 IN4 = %pin4|direction %direction|cycle delay (us) = %delay" pin1.defl=DigitalPin.P13 pin2.defl=DigitalPin.P14 pin3.defl=DigitalPin.P15 pin4.defl=DigitalPin.P16 delay.min=2300 delay.defl=2300 group="5. DC/Stepper Motors"
+    //% block="Stepper motor 1 step|(with ULN2003 driver board)|IN1 = %pin1 IN2 = %pin2 IN3 = %pin3 IN4 = %pin4|direction %direction|cycle delay (us) = %delay" pin1.defl=DigitalPin.P13 pin2.defl=DigitalPin.P14 pin3.defl=DigitalPin.P15 pin4.defl=DigitalPin.P16 delay.min=0 delay.defl=2000 group="5. DC/Stepper Motors"
     export function stepMotor(pin1: DigitalPin, pin2: DigitalPin, pin3: DigitalPin, pin4: DigitalPin, direction: steMotorDir, delay: number) {
         let pins_array: DigitalPin[] = [pin1, pin2, pin3, pin4]
-        if (delay < 2300) delay = 2300
+        if (delay < 0) delay = 0
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 let index = -1
@@ -610,12 +610,12 @@ namespace nexusbit {
         }
     }
 
-    //% block="2WD stepper motor car 1 step|(with ULN2003 driver boards)|motor A IN1 = %pin1a|motor A IN2 = %pin2a|motor A IN3 = %pin3a|motor A IN4 = %pin4a|motor B IN1 = %pin1b|motor B IN2 = %pin2b|motor B IN3 = %pin3b|motor B IN4 = %pin4b|motor A direction %direction_1|motor B direction %direction_2|cycle delay (us) = %delay|disable LEDs %disable_led" pin1a.defl=DigitalPin.P6 pin2a.defl=DigitalPin.P7 pin3a.defl=DigitalPin.P9 pin4a.defl=DigitalPin.P10 pin1b.defl=DigitalPin.P13 pin2b.defl=DigitalPin.P14 pin3b.defl=DigitalPin.P15 pin4b.defl=DigitalPin.P16 delay.min=2300 delay.defl=2300 disable_led.defl=true group="5. DC/Stepper Motors" advanced=true
+    //% block="2WD stepper motor car 1 step|(with ULN2003 driver boards)|motor A IN1 = %pin1a|motor A IN2 = %pin2a|motor A IN3 = %pin3a|motor A IN4 = %pin4a|motor B IN1 = %pin1b|motor B IN2 = %pin2b|motor B IN3 = %pin3b|motor B IN4 = %pin4b|motor A direction %direction_1|motor B direction %direction_2|cycle delay (us) = %delay|disable LEDs %disable_led" pin1a.defl=DigitalPin.P6 pin2a.defl=DigitalPin.P7 pin3a.defl=DigitalPin.P9 pin4a.defl=DigitalPin.P10 pin1b.defl=DigitalPin.P13 pin2b.defl=DigitalPin.P14 pin3b.defl=DigitalPin.P15 pin4b.defl=DigitalPin.P16 delay.min=0 delay.defl=2000 disable_led.defl=true group="5. DC/Stepper Motors" advanced=true
     export function stepMotorCar(pin1a: DigitalPin, pin2a: DigitalPin, pin3a: DigitalPin, pin4a: DigitalPin, pin1b: DigitalPin, pin2b: DigitalPin, pin3b: DigitalPin, pin4b: DigitalPin, direction_1: steMotorDir, direction_2: steMotorDir, delay: number, disable_led: boolean) {
         let pins_array_1: DigitalPin[] = [pin1a, pin2a, pin3a, pin4a]
         let pins_array_2: DigitalPin[] = [pin1b, pin2b, pin3b, pin4b]
         led.enable(!disable_led)
-        if (delay < 2300) delay = 2300
+        if (delay < 0) delay = 0
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 let index_1 = -1
