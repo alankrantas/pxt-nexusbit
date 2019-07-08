@@ -26,8 +26,6 @@ Check out our webpage for more information:
 
 [Nexus:bit使用手冊--繁體中文](https://www.slideshare.net/beyond-coding/nexusbit-for-bbc-microbit)
 
-You can also check out the quick version NexusBot assembly video: https://www.youtube.com/watch?v=o8t25wX5Ztw
-
 ## Nexus:bit Features
 
 * an onboard rechargable 18650 lithium battery (included; 2600 mAh)
