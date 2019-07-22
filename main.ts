@@ -257,14 +257,6 @@ namespace nexusbit {
         }
     }
 
-    //% block="Board information (see serial output)" group="1. Setup" advanced=true
-    export function info() {
-        serial.writeLine("Nexus:bit/Thunder:bit/NexusBot are products of Taiwan Coding Education Association (TCEA) (www.beyond-coding.org.tw)")
-        serial.writeLine("Extension by Alan Wang, 2019. (github.com/alankrantas/pxt-Nexusbit)")
-        serial.writeLine("Current selected board: " + _boardName)
-        serial.writeLine("PCA9685 servo num: " + _servoNum)
-    }
-
     //% block="Joystick direction %direction ?" direction.fieldEditor="gridpicker" group="2. Basic"
     export function joystickToDir(direction: joystickDir): boolean {
         switch (direction) {
